@@ -3,7 +3,6 @@ package TestCases;
 import Generic.ZeptoLogin;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static Generic.ZeptoRoutes.ZeptoGetTicketList;
@@ -11,7 +10,7 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoGetAllPendingTickets extends ZeptoLogin {
+public class TestZeptoGetAllPendingTickets extends ZeptoLogin {
 
     @Test
     public void ZeptoGetAllPendingTickets() {

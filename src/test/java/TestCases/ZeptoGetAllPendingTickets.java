@@ -1,8 +1,6 @@
 package TestCases;
 
-import Generic.MeeshoSXLogin;
 import Generic.ZeptoLogin;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeTest;

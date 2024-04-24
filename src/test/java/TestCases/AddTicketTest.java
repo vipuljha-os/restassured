@@ -1,10 +1,9 @@
 package TestCases;
 
+import FileUtility.FileLib;
 import Generic.MeeshoSXLogin;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static Generic.Routes.addTicket;
@@ -17,7 +16,10 @@ public class AddTicketTest extends MeeshoSXLogin {
 
     @Test
     public void AddTicket() {
-
+        hardWait();
+        long start = System.currentTimeMillis();
+        System.out.println(start);
+        System.out.println(cookies.toString());
         Response response = given()
                 .cookies(cookies)
                 //.formParams(map)
@@ -59,6 +61,10 @@ public class AddTicketTest extends MeeshoSXLogin {
                 .when()
                 .post(addTicket);
 
+        long end = System.currentTimeMillis();
+        System.out.println(end);
+        System.out.println("Time taken is " + (end-start));
+
         //Status code validation
         int statusCode = response.getStatusCode();
         System.out.println("status code " + statusCode);
@@ -77,5 +83,12 @@ public class AddTicketTest extends MeeshoSXLogin {
         assertThat(ForResponseParametersValidation, equalTo("Pending"));
         System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
+
+        //To Store the Created ticket Id
+        String createdTicketId = jsonPath.get("response.ticketId");
+        System.out.println("***********************");
+        System.out.println(createdTicketId);
+        FileLib.writeDataIntoPropertyFile(createdTicketId);
+
     }
 }

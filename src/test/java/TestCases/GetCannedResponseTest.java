@@ -1,10 +1,8 @@
 package TestCases;
 
 import Generic.MeeshoSXLogin;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static Generic.Routes.cannedResponse;
@@ -15,6 +13,8 @@ import static org.testng.Assert.assertTrue;
 public class GetCannedResponseTest extends MeeshoSXLogin {
     @Test
     public void cannedResponse() {
+        hardWait();
+        System.out.println(cookies.toString());
         Response response = given()
                 .cookies(cookies)
                 .formParam("type", "O")

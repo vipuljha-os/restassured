@@ -1,0 +1,1 @@
+{"uuid":"3f5a555f-280f-434e-97af-d4cf7846e0d5","name":"TestCases.PerformanceDashBoardTest","children":["3046c453-d326-4234-afa0-4b4ad98fdb7f"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1713953725459,"stop":1713953725573}],"afters":[],"start":1713953699698,"stop":1713953762207}

@@ -27,7 +27,7 @@ public class MeeshoSXLogin {
     }
     public static void hardWait(){
         try {
-            Thread.sleep(500);
+            Thread.sleep(700);
         }catch (Exception e){
             e.printStackTrace();
         }

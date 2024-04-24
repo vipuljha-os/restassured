@@ -1,0 +1,1 @@
+{"uuid":"61183997-115b-4be5-a8e3-526b2cdc6c10","name":"TestCases.GetAllPendingTicketsTest","children":["1fa51367-4146-4058-846b-322f8373e499"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1713953715008,"stop":1713953715149}],"afters":[],"start":1713953699698,"stop":1713953762204}

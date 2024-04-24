@@ -10,7 +10,7 @@ import static Generic.Routes.ticketDispose;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class TicketDisposeTicket extends MeeshoSXLogin {
+public class ATicketDisposeTicket extends MeeshoSXLogin {
     @Test
     public void disposeTicket() {
         hardWait();

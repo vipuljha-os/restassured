@@ -1,0 +1,1 @@
+{"uuid":"e83e7ff2-f5dc-4587-aaf4-6ebd375a928a","name":"TestCases.EmailTemlatesTest","children":["247cd19a-3229-4666-98f7-15d45409a937"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1713951137813,"stop":1713951137940}],"afters":[],"start":1713951129429,"stop":1713951183743}

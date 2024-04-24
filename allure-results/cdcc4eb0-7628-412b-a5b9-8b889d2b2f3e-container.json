@@ -1,0 +1,1 @@
+{"uuid":"cdcc4eb0-7628-412b-a5b9-8b889d2b2f3e","name":"TestCases.ATicketDisposeTicket","children":["f0241770-18a6-4539-a43f-9a5440485c54"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1713953873665,"stop":1713953873829}],"afters":[],"start":1713953868446,"stop":1713953910583}

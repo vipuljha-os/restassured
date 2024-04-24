@@ -15,6 +15,7 @@ import static org.testng.Assert.assertTrue;
 public class GetTicketsCreatedByMeTest extends MeeshoSXLogin {
     @Test
     public void GetCreatedByMeTickets(){
+        hardWait();
         Response response = given()
                 .cookies(cookies)
                 .formParam("status", "P")

@@ -1,0 +1,1 @@
+{"uuid":"1ec84bb1-535a-4501-a558-64f9126e06ad","name":"TestCases.ReopenTicketTest","children":["33ea389c-606c-4eac-beb6-da6b9d06ce1d"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1713953748641,"stop":1713953748999}],"afters":[],"start":1713953699698,"stop":1713953762208}

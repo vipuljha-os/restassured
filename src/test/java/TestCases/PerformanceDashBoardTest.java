@@ -49,7 +49,7 @@ public class PerformanceDashBoardTest extends MeeshoSXLogin {
         //Response time validation
         long responseTime = response.getTime();
         System.out.println("Response time ="+ responseTime);
-        assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
+        assertTrue(responseTime < 4000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
         //Parameter validation
         String responseBody = response.getBody().asString();

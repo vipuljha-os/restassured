@@ -10,10 +10,15 @@ import static Generic.Routes.ticketDispose;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ATicketDisposeTicket extends MeeshoSXLogin {
+public class AATicketDisposeTicket extends MeeshoSXLogin {
     @Test
     public void disposeTicket() {
         hardWait();
+        try {
+            Thread.sleep(7000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         System.out.println(cookies.toString());
         Response response = RestAssured.given()
                 .formParam("task_id", "528961224")

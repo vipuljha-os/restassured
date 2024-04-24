@@ -1,0 +1,1 @@
+{"uuid":"4e0605dd-dd48-417f-9926-82417bdf7eda","name":"TestCases.GetTicketDetailsTest","children":["e63ec1e2-4d11-43cd-b1ad-fb1ebff5db35"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1713949961129,"stop":1713949961264}],"afters":[],"start":1713949943739,"stop":1713950003390}

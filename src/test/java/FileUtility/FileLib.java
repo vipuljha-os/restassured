@@ -7,14 +7,14 @@ import java.util.Properties;
 
 public class FileLib {
     public static String getPropertyData(String key) throws IOException {
-        FileInputStream fis = new FileInputStream("C:\\Inteleje test\\KaptureRestassured\\src\\test\\java\\FileUtility\\Cookies");
+        FileInputStream fis = new FileInputStream("C:\\KapRest\\backendtests\\src\\test\\java\\FileUtility\\Cookies");
         Properties p = new Properties();
         p.load(fis);
         return p.getProperty(key);
     }
     public static void writeDataIntoPropertyFile(String value){
         try {
-            FileOutputStream fos= new FileOutputStream("C:\\Inteleje test\\KaptureRestassured\\src\\test\\java\\FileUtility\\ToStoreTicketId");
+            FileOutputStream fos= new FileOutputStream("C:\\KapRest\\backendtests\\src\\test\\java\\FileUtility\\ToStoreTicketId");
             Properties p=new Properties();
             p.setProperty("createdTicket",value);
             p.store(fos,"WrittenData");

@@ -3,6 +3,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import static Generic.Routes.login;
 
@@ -11,7 +12,7 @@ public class MeeshoSXLogin {
  @BeforeClass
     public void Login() {
         String username = "meeshosxtest1";
-        String password = "Kapture@1";
+        String password = "Testkap@12345";
 
         Response response = RestAssured.given()
                 .queryParam("username", username)

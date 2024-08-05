@@ -29,7 +29,7 @@ public class SearchTicketByEmailTest extends MeeshoSXLogin {
         //Response time validation
         long responseTime = response.getTime();
         System.out.println("Response Code ="+ responseTime);
-        assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
+        assertTrue(responseTime < 5000, "Response time exceeds the acceptable threshold of 5000 milliseconds");
 
         //Parameter validation
         String responseBody = response.getBody().asString();

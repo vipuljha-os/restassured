@@ -5,6 +5,7 @@
     <test name="Kapture">
         <classes>
             <class name="TestCases.ZeptoAddTicket" />
+            <class name="TestCases.ZeptoGetTicketDetails" />
             <class name="TestCases.ZeptoGetTicketsCreatedByMe" />
             <class name="TestCases.ZeptoGetAssignedToMe" />
             <class name="TestCases.ZeptoAllCompleteTickets" />

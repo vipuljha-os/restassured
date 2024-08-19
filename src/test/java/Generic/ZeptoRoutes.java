@@ -9,6 +9,6 @@ public class ZeptoRoutes {
     public static String ZeptoGetTicketList= BaseURL+"/api/version3/ticket/get-ticket-list";
     public static String cannedResponse= BaseURL+"/api/version3/ticket/get-social-media-canned-response";
     public static String GetTicketDetail= BaseURL+"/api/version3/ticket/get-ticket-detail";
-
+    public static String JunkTicket = BaseURL+"/api/version3/ticket/junk-task";
     public static String ticketDispose= BaseURL+"/api/version3/ticket/dispose-task";
 }

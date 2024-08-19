@@ -1,0 +1,19 @@
+<suite name="Kapture">
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg" />
+    </listeners>
+    <test name="Kapture">
+        <classes>
+            <class name="TestCases.ZeptoAddTicket" />
+            <class name="TestCases.ZeptoGetTicketsCreatedByMe" />
+            <class name="TestCases.ZeptoGetAssignedToMe" />
+            <class name="TestCases.ZeptoAllCompleteTickets" />
+            <class name="TestCases.ZeptoGetAllPendingTickets" />
+            <class name="TestCases.ZeptoUnassignedTickets" />
+            <class name="TestCases.ZeptoTicketDispose" />
+            <class name="TestCases.ZeptoAllJunkTicketsTest" />
+            <class name="TestCases.ZeptoCompletedByMe" />
+            <class name="TestCases.ZeptoJunkTicket" />
+        </classes>
+    </test>
+</suite>

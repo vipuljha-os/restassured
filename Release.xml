@@ -15,6 +15,11 @@
             <class name="TestCases.ZeptoAllJunkTicketsTest" />
             <class name="TestCases.ZeptoCompletedByMe" />
             <class name="TestCases.ZeptoJunkTicket" />
+            <class name="TestCases.ZeptoGetMoreTickets" />
+            <class name="TestCases.ZeptoGetHistoryDetails" />
+            <class name="TestCases.ZeptoGetOrderList" />
+            <class name="TestCases.ZeptoGetOrderDetail" />
+            <class name="TestCases.ZeptoGetOtherOrderDetail" />
         </classes>
     </test>
 </suite>

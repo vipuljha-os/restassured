@@ -1,6 +1,7 @@
 package TestCases;
 
 import Generic.ZeptoLogin;
+import Generic.ZeptoRoutes;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -19,7 +20,7 @@ public class ZeptoGetOtherOrderDetail extends ZeptoLogin {
                 .cookies(cookies)
                 .body(jsonBody)
                 .when()
-                .post("https://zepto.kapturecrm.com/ms/ticketcustomer/order/other-detail");
+                .post(ZeptoRoutes.GetOtherOrderDetail);
         response.then().log().all();
 
         //Status code validation

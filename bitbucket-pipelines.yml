@@ -9,6 +9,9 @@ pipelines:
           script:
             - apt-get update && apt-get install -y curl
             - set +e
+            # Echo the path of the test scripts
+            - echo "Test scripts path:"
+            - find $(pwd) -name "*.java" # This will list all Java test files
             # Run tests using release.xml and rerun failing tests once
             - mvn clean test -Dsurefire.suiteXmlFiles=Release.xml
             - |

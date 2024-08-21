@@ -16,6 +16,7 @@ public class ZeptoAllJunkTicketsTest extends ZeptoLogin {
         Response response = given()
                 .cookies(cookies)
                 .formParam("status","J")
+                .formParam("type","4")
                 .when()
                 .post(ZeptoGetTicketList);
 

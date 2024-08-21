@@ -17,6 +17,7 @@ public class ZeptoGetAssignedToMe extends ZeptoLogin {
         Response response = given()
                 .cookies(cookies)
                 .formParam("type","5")
+                .formParam("status","P")
                 .when()
                 .post(ZeptoGetTicketList);
 

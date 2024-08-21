@@ -13,9 +13,10 @@ import static org.testng.Assert.assertTrue;
 public class ZeptoGetTicketsCreatedByMe extends ZeptoLogin {
     @Test
     public void getCreatedByMeTickets() {
-        Response response = given()
+        Response response = given().contentType("application/json")
                 .cookies(cookies)
                 .formParam("type", "6")
+                .formParam("status","P")
                 .when()
                 .post(ZeptoGetTicketList);
 

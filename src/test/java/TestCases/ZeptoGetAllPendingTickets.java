@@ -10,17 +10,19 @@ import org.testng.annotations.Test;
 
 import static Generic.ZeptoRoutes.ZeptoGetTicketList;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ZeptoGetAllPendingTickets extends ZeptoLogin {
 
     @Test
-    public void ZeptoGetAllPendingTickets() {
+    public void getAllPendingTickets() {
 
         Response response = given()
                 .cookies(cookies)
                 .formParam("status", "P")
+                .formParam("type","2")
                 .when()
                 .post(ZeptoGetTicketList);
 

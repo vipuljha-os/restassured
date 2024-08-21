@@ -1,8 +1,8 @@
-<suite name="Kapture">
+<suite name="KaptureBackend">
     <listeners>
         <listener class-name="io.qameta.allure.testng.AllureTestNg" />
     </listeners>
-    <test name="Kapture">
+    <test name="KaptureBackend">
         <classes>
             <class name="TestCases.ZeptoAddTicket" />
             <class name="TestCases.ZeptoGetTicketDetails" />

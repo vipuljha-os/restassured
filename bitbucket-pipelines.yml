@@ -1,0 +1,28 @@
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build, Test, Rerun Failed Tests, and Send Results to Google Chat
+          image: maven:3.8.5-openjdk-17
+          caches:
+            - maven
+          script:
+            - apt-get update && apt-get install -y curl
+            - set +e
+            # Run tests using release.xml and rerun failing tests once
+            - mvn clean test -Dsurefire.suiteXmlFiles=release.xml -Dsurefire.rerunFailingTestsCount=1
+            - |
+              TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
+              TESTS=$(echo $TEST_RESULTS | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')
+              FAILURES=$(echo $TEST_RESULTS | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*')
+              ERRORS=$(echo $TEST_RESULTS | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
+              SKIPPED=$(echo $TEST_RESULTS | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*')
+              # Extract the names of the failed test cases, limiting to the first 5
+              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5)
+              FAILED_TESTS=$(echo "$FAILED_TESTS" | tr '\n' ', ' | sed 's/, $//')
+              if [ -z "$FAILED_TESTS" ]; then
+                FAILED_TESTS="None"
+              fi
+              MESSAGE="Pipeline run completed. Final Test Results: Tests: $TESTS, Failures: $FAILURES, Errors: $ERRORS, Skipped: $SKIPPED. Failed Tests: $FAILED_TESTS"
+              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAbn1eoMU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=p12jwlFrGkJTwXVrlBZ01SvDHXf9ggXQrz_pkPUtBoM"
+            - set -e

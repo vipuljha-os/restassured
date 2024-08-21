@@ -13,7 +13,7 @@ pipelines:
             - echo "Test scripts path:"
             - find $(pwd) -name "*.java" # This will list all Java test files
             # Run tests using release.xml and rerun failing tests once
-            - mvn clean test -Dsurefire.suiteXmlFiles=release.xml -Dsurefire.rerunFailingTestsCount=1
+            - mvn clean test -Dsurefire.suiteXmlFiles=Release.xml
             - |
               TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
               TESTS=$(echo $TEST_RESULTS | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')

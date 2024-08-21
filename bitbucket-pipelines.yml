@@ -10,7 +10,7 @@ pipelines:
             - apt-get update && apt-get install -y curl
             - set +e
             # Run tests using release.xml and rerun failing tests once
-            - mvn clean test -Dsurefire.suiteXmlFiles=release.xml
+            - mvn clean test -Dsurefire.suiteXmlFiles=Release.xml
             - |
               TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
               TESTS=$(echo $TEST_RESULTS | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')

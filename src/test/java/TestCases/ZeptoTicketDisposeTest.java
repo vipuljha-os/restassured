@@ -3,35 +3,34 @@ package TestCases;
 import FileUtility.FileeLib;
 import Generic.ZeptoLogin;
 import Generic.ZeptoRoutes;
+import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static Generic.Routes.GetTicketDetail;
-import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoGetTicketDetails extends ZeptoLogin {
+public class ZeptoTicketDisposeTest extends ZeptoLogin {
     @Test
-    public void getTicketDetails() throws IOException {
+    public void disposeTicket() throws IOException {
 
-//        String ticketId = FileeLib.getPropertyData("ticketId");
-//        String taskId = FileeLib.getPropertyData("taskId");
-        Response response = given()
+        String ticketId = FileeLib.getPropertyData("ticketId");
+        String taskId = FileeLib.getPropertyData("taskId");
+
+        Response response = RestAssured.given()
+                .formParam("task_id",taskId)
+                .formParam("ticket_id", ticketId)
+                .formParam("sub_status","CO")
                 .cookies(cookies)
-                .formParam("id", "591100846")
-                .formParam("ticket_id", "723110165341")
-                .formParam("data_type","ticket")
-                .when()
-                .post(ZeptoRoutes.GetTicketDetail);
+                .post(ZeptoRoutes.ticketDispose);
+
         response.then().log().all();
 
-        //Status code validation
-        int statusCode = response.getStatusCode();
-        System.out.println("status code =" + statusCode);
+        int statusCode = response.statusCode();
+        System.out.println("status code " + statusCode);
         response.then().statusCode(200);
 
         //Response time validation
@@ -39,6 +38,7 @@ public class ZeptoGetTicketDetails extends ZeptoLogin {
         System.out.println("Response Code ="+ responseTime);
         assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
+        // Parameter validation
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
         JsonPath jsonPath = new JsonPath(responseBody);
@@ -47,7 +47,6 @@ public class ZeptoGetTicketDetails extends ZeptoLogin {
         assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
         System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
-        //System.out.println("Ticket details of Ticket Id : "+ ticketId);
-
+        System.out.println("Ticket has been disposed successfully with Ticket_Id : "+ ticketId);
     }
 }

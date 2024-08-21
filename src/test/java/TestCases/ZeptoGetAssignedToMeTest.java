@@ -5,18 +5,19 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+
 import static Generic.ZeptoRoutes.ZeptoGetTicketList;
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoCompletedByMe extends ZeptoLogin {
+public class ZeptoGetAssignedToMeTest extends ZeptoLogin {
     @Test
-    public void getCompletedByMe() {
+    public void getAllAssignedToMe(){
         Response response = given()
                 .cookies(cookies)
-                .formParam("type", "7")
-                .formParam("status","C")
+                .formParam("type","5")
+                .formParam("status","P")
                 .when()
                 .post(ZeptoGetTicketList);
 

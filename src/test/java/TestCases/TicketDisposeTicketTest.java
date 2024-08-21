@@ -1,23 +1,17 @@
 package TestCases;
 
-import FileUtility.FileLib;
 import Generic.MeeshoSXLogin;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Cookies;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashMap;
 
 import static Generic.Routes.ticketDispose;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class TicketDisposeTicket extends MeeshoSXLogin {
+public class TicketDisposeTicketTest extends MeeshoSXLogin {
     @Test
     public void disposeTicket() {
             Response response = RestAssured.given()

@@ -10,13 +10,12 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoAllCompleteTickets extends ZeptoLogin {
+public class ZeptoUnassignedTicketsTest extends ZeptoLogin {
     @Test
-    public void getAllCompleteTickets() {
+    public void getAllUnassignedTickets() {
         Response response = given()
                 .cookies(cookies)
-                .formParam("type", "3")
-                .formParam("status","C")
+                .formParam("type", "1")
                 .when()
                 .post(ZeptoGetTicketList);
 

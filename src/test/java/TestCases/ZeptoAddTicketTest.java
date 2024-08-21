@@ -1,9 +1,7 @@
 package TestCases;
 
 import FileUtility.FileeLib;
-import Generic.Routes;
 import Generic.ZeptoLogin;
-import Generic.ZeptoRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
@@ -14,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoAddTicket extends ZeptoLogin {
+public class ZeptoAddTicketTest extends ZeptoLogin {
     public String ticketId;
     public String taskId;
 

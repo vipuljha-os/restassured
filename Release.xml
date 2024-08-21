@@ -4,22 +4,22 @@
     </listeners>
     <test name="KaptureBackend">
         <classes>
-            <class name="TestCases.ZeptoAddTicket" />
-            <class name="TestCases.ZeptoGetTicketDetails" />
-            <class name="TestCases.ZeptoGetTicketsCreatedByMe" />
-            <class name="TestCases.ZeptoGetAssignedToMe" />
-            <class name="TestCases.ZeptoAllCompleteTickets" />
-            <class name="TestCases.ZeptoGetAllPendingTickets" />
-            <class name="TestCases.ZeptoUnassignedTickets" />
-            <class name="TestCases.ZeptoTicketDispose" />
+            <class name="TestCases.ZeptoAddTicketTest" />
+            <class name="TestCases.ZeptoGetTicketDetailsTest" />
+            <class name="TestCases.ZeptoGetTicketsCreatedByMeTest" />
+            <class name="TestCases.ZeptoGetAssignedToMeTest" />
+            <class name="TestCases.ZeptoAllCompleteTicketsTest" />
+            <class name="TestCases.ZeptoGetAllPendingTicketsTest" />
+            <class name="TestCases.ZeptoUnassignedTicketsTest" />
+            <class name="TestCases.ZeptoTicketDisposeTest" />
             <class name="TestCases.ZeptoAllJunkTicketsTest" />
-            <class name="TestCases.ZeptoCompletedByMe" />
-            <class name="TestCases.ZeptoJunkTicket" />
-            <class name="TestCases.ZeptoGetMoreTickets" />
-            <class name="TestCases.ZeptoGetHistoryDetails" />
-            <class name="TestCases.ZeptoGetOrderList" />
-            <class name="TestCases.ZeptoGetOrderDetail" />
-            <class name="TestCases.ZeptoGetOtherOrderDetail" />
+            <class name="TestCases.ZeptoCompletedByMeTest" />
+            <class name="TestCases.ZeptoJunkTicketTest" />
+            <class name="TestCases.ZeptoGetMoreTicketsTest" />
+            <class name="TestCases.ZeptoGetHistoryDetailsTest" />
+            <class name="TestCases.ZeptoGetOrderListTest" />
+            <class name="TestCases.ZeptoGetOrderDetailTest" />
+            <class name="TestCases.ZeptoGetOtherOrderDetailTest" />
         </classes>
     </test>
 </suite>

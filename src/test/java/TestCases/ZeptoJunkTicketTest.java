@@ -3,32 +3,29 @@ package TestCases;
 import FileUtility.FileeLib;
 import Generic.ZeptoLogin;
 import Generic.ZeptoRoutes;
-import io.qameta.allure.internal.shadowed.jackson.annotation.JsonTypeInfo;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static Generic.Routes.ticketDispose;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoTicketDispose extends ZeptoLogin {
-    @Test
-    public void disposeTicket() throws IOException {
+public class ZeptoJunkTicketTest extends ZeptoLogin {
 
+    @Test
+    public void junkTicket() throws IOException {
         String ticketId = FileeLib.getPropertyData("ticketId");
         String taskId = FileeLib.getPropertyData("taskId");
 
         Response response = RestAssured.given()
                 .formParam("task_id",taskId)
                 .formParam("ticket_id", ticketId)
-                .formParam("sub_status","CO")
+                .formParam("remark","test")
                 .cookies(cookies)
-                .post(ZeptoRoutes.ticketDispose);
+                .post(ZeptoRoutes.JunkTicket);
 
         response.then().log().all();
 
@@ -47,9 +44,10 @@ public class ZeptoTicketDispose extends ZeptoLogin {
         JsonPath jsonPath = new JsonPath(responseBody);
 
         Object ForResponseParametersValidation = jsonPath.get("status");
-        assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
+        assertEquals(String.valueOf(ForResponseParametersValidation), "success");
         System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
-        System.out.println("Ticket has been disposed successfully with Ticket_Id : "+ ticketId);
+        System.out.println("Ticket has been Junked successfully with Ticket_Id : "+ ticketId);
+
     }
 }

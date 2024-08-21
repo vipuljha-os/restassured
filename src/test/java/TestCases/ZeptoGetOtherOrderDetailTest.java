@@ -2,7 +2,7 @@ package TestCases;
 
 import Generic.ZeptoLogin;
 import Generic.ZeptoRoutes;
-import io.restassured.path.json.JsonPath;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -10,16 +10,16 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoGetHistoryDetails extends ZeptoLogin {
+public class ZeptoGetOtherOrderDetailTest extends ZeptoLogin {
     @Test
-    public void getHistoryDetails(){
+    public void getOtherOrderDetail(){
+        String jsonBody = "{\"configId\":43,\"customerId\":\"\",\"email\":\"\",\"phone\":\"\",\"shipmentId\":\"\",\"ticketId\":\"723110165341\",\"taskId\":591100846,\"orderId\":\"1BAEBBKNR11137\",\"otherDetail\":{\"userId\":\"101b3bbd-4213-4d8d-81c4-c7bdf25c66db\"}}";
         Response response = given()
+                .contentType(ContentType.JSON)
                 .cookies(cookies)
-                .formParam("id", "591100846")
-                .formParam("ticket_id", "723110165341")
-                .formParam("data_type","history")
+                .body(jsonBody)
                 .when()
-                .post(ZeptoRoutes.GetTicketDetail);
+                .post(ZeptoRoutes.GetOtherOrderDetail);
         response.then().log().all();
 
         //Status code validation
@@ -32,13 +32,5 @@ public class ZeptoGetHistoryDetails extends ZeptoLogin {
         System.out.println("Response Code ="+ responseTime);
         assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
-        String responseBody = response.getBody().asString();
-        System.out.println(responseBody);
-        JsonPath jsonPath = new JsonPath(responseBody);
-
-        Object ForResponseParametersValidation = jsonPath.get("status");
-        assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
-        System.out.println("******************************");
-        System.out.println(ForResponseParametersValidation);
     }
 }

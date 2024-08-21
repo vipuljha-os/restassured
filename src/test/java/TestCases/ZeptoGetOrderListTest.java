@@ -3,26 +3,24 @@ package TestCases;
 import Generic.ZeptoLogin;
 import Generic.ZeptoRoutes;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.Cookies.cookies;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoGetOrderDetail extends ZeptoLogin {
+public class ZeptoGetOrderListTest extends ZeptoLogin {
     @Test
-    public void getOrderDetail(){
-        String jsonBody = "{\"customerId\":\"\",\"email\":\"\",\"phone\":\"\",\"shipmentId\":\"\",\"ticketId\":\"723110165341\",\"taskId\":591100846,\"orderId\":\"193DBBKNH86124\",\"otherDetail\":{\"userId\":\"101b3bbd-4213-4d8d-81c4-c7bdf25c66db\"}}";
+    public void getOrderList(){
+        String jsonBody = "{\"customerId\":\"\",\"email\":\"\",\"phone\":\"\",\"ticketId\":\"723110165341\",\"taskId\":591100846,\"shipmentId\":\"\",\"orderId\":\"\",\"otherDetail\":{\"page\":1,\"pagesize\":20,\"attr1\":\"101b3bbd-4213-4d8d-81c4-c7bdf25c66db\"}}";
         Response response = given()
                 .contentType(ContentType.JSON)
                 .cookies(cookies)
                 .body(jsonBody)
                 .when()
-                .post(ZeptoRoutes.GetOrderDetail);
-                 response.then().log().all();
+                .post(ZeptoRoutes.GetOrderList);
+        response.then().log().all();
 
         //Status code validation
         int statusCode = response.getStatusCode();
@@ -34,6 +32,6 @@ public class ZeptoGetOrderDetail extends ZeptoLogin {
         System.out.println("Response Code ="+ responseTime);
         assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
-    }
 
+    }
 }

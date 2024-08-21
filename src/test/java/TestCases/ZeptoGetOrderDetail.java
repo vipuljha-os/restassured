@@ -21,7 +21,7 @@ public class ZeptoGetOrderDetail extends ZeptoLogin {
                 .cookies(cookies)
                 .body(jsonBody)
                 .when()
-                .post("https://zepto.kapturecrm.com/ms/ticketcustomer/order/detail");
+                .post(ZeptoRoutes.GetOrderDetail);
                  response.then().log().all();
 
         //Status code validation

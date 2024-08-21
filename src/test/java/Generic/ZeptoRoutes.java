@@ -11,4 +11,8 @@ public class ZeptoRoutes {
     public static String GetTicketDetail= BaseURL+"/api/version3/ticket/get-ticket-detail";
     public static String JunkTicket = BaseURL+"/api/version3/ticket/junk-task";
     public static String ticketDispose= BaseURL+"/api/version3/ticket/dispose-task";
+    public static String GetOrderDetail= BaseURL+"/ms/ticketcustomer/order/detail";
+    public static String GetOrderList= BaseURL+"/ms/ticketcustomer/order/list";
+    public static String GetOtherOrderDetail= BaseURL+"/api/version3/ticket/dispose-task";
+
 }

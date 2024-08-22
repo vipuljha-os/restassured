@@ -32,7 +32,7 @@
         <configuration>
           <!-- Updated path to your Release.xml file -->
           <suiteXmlFiles>
-            <suiteXmlFile>C:/KapRest/backendtests/release.xml</suiteXmlFile>
+            <suiteXmlFile>/opt/atlassian/pipelines/agent/build/release.xml</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
       </plugin>

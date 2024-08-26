@@ -1,6 +1,6 @@
 package TestCases;
 
-import FileUtility.FileeLib;
+import FileUtility.FileLibOne;
 import Generic.ZeptoLogin;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -17,7 +17,7 @@ public class ZeptoAddTicketTest extends ZeptoLogin {
     public String taskId;
 
     @Test
-    void addTicket(){
+    void addTicket() {
 
         Response response = given()
                 .cookies(cookies)
@@ -42,14 +42,14 @@ public class ZeptoAddTicketTest extends ZeptoLogin {
                 .formParam("sub_status", "")
                 .formParam("redirect_to_ticket_detail", "no")
                 .formParam("external_order_detail", "null")
-                .formParam("pending_task_id","false")
-                .formParam("taskDetail","test")
+                .formParam("pending_task_id", "false")
+                .formParam("taskDetail", "test")
                 .when()
                 .post(addTicket);
         response.then().log().all();
 
         ticketId = response.jsonPath().getString("response.ticketId");
-        taskId =   response.jsonPath().getString("response.id");
+        taskId = response.jsonPath().getString("response.id");
 
         //Status code validation
         int statusCode = response.getStatusCode();
@@ -69,9 +69,8 @@ public class ZeptoAddTicketTest extends ZeptoLogin {
         assertThat(ForResponseParametersValidation, equalTo("Pending"));
         System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
-        System.out.println("Ticket has been added successfully with Ticket_Id : "+ticketId);
-
-        FileeLib.writeDataIntoPropertyFile(ticketId,taskId);
+        System.out.println("Ticket has been added successfully with Ticket_Id : " + ticketId);
+        FileLibOne.writeDataIntoPropertyFile(ticketId, taskId);
 
     }
 }

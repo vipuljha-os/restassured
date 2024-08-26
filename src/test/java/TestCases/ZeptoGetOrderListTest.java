@@ -12,7 +12,7 @@ import static org.testng.Assert.assertTrue;
 
 public class ZeptoGetOrderListTest extends ZeptoLogin {
     @Test
-    public void getOrderList(){
+    public void getOrderList() {
         String jsonBody = "{\"customerId\":\"\",\"email\":\"\",\"phone\":\"\",\"ticketId\":\"723110165341\",\"taskId\":591100846,\"shipmentId\":\"\",\"orderId\":\"\",\"otherDetail\":{\"page\":1,\"pagesize\":20,\"attr1\":\"101b3bbd-4213-4d8d-81c4-c7bdf25c66db\"}}";
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -29,9 +29,8 @@ public class ZeptoGetOrderListTest extends ZeptoLogin {
 
         //Response time validation
         long responseTime = response.getTime();
-        System.out.println("Response Code ="+ responseTime);
+        System.out.println("Response Time =" + responseTime);
         assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
-
 
     }
 }

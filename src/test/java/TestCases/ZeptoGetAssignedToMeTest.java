@@ -13,11 +13,11 @@ import static org.testng.Assert.assertTrue;
 
 public class ZeptoGetAssignedToMeTest extends ZeptoLogin {
     @Test
-    public void getAllAssignedToMe(){
+    public void getAllAssignedToMe() {
         Response response = given()
                 .cookies(cookies)
-                .formParam("type","5")
-                .formParam("status","P")
+                .formParam("type", "5")
+                .formParam("status", "P")
                 .when()
                 .post(ZeptoGetTicketList);
 

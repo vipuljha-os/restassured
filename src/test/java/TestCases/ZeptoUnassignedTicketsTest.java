@@ -28,7 +28,7 @@ public class ZeptoUnassignedTicketsTest extends ZeptoLogin {
         System.out.println("response time" + responseTime);
         assertTrue(responseTime < 10000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
-        //Field validation
+        //Fields validation
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
         JsonPath jsonPath = new JsonPath(responseBody);

@@ -20,7 +20,6 @@ public class AddTicketTest extends MeeshoSXLogin {
 
         Response response = given()
                 .cookies(cookies)
-                //.formParams(map)
                 .formParam("customer_id", "130754919")
                 .formParam("enquiry_id", "0")
                 .formParam("contact_id", "152105038")

@@ -16,7 +16,7 @@ public class ZeptoCompletedByMeTest extends ZeptoLogin {
         Response response = given()
                 .cookies(cookies)
                 .formParam("type", "7")
-                .formParam("status","C")
+                .formParam("status", "C")
                 .when()
                 .post(ZeptoGetTicketList);
 

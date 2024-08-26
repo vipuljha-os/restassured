@@ -14,7 +14,7 @@ import static org.testng.Assert.assertTrue;
 
 public class GetTicketsCreatedByMeTest extends MeeshoSXLogin {
     @Test
-    public void GetCreatedByMeTickets(){
+    public void GetCreatedByMeTickets() {
         Response response = given()
                 .cookies(cookies)
                 .formParam("status", "P")
@@ -38,6 +38,5 @@ public class GetTicketsCreatedByMeTest extends MeeshoSXLogin {
         assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
         System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
-        System.out.println("And Now you're all Set my friend");
     }
 }

@@ -14,15 +14,12 @@ import static org.testng.Assert.assertTrue;
 
 public class ZeptoGetTicketDetailsTest extends ZeptoLogin {
     @Test
-    public void getTicketDetails() throws IOException {
-
-//        String ticketId = FileeLib.getPropertyData("ticketId");
-//        String taskId = FileeLib.getPropertyData("taskId");
+    public void getTicketDetails() {
         Response response = given()
                 .cookies(cookies)
                 .formParam("id", "591100846")
                 .formParam("ticket_id", "723110165341")
-                .formParam("data_type","ticket")
+                .formParam("data_type", "ticket")
                 .when()
                 .post(ZeptoRoutes.GetTicketDetail);
         response.then().log().all();
@@ -34,7 +31,7 @@ public class ZeptoGetTicketDetailsTest extends ZeptoLogin {
 
         //Response time validation
         long responseTime = response.getTime();
-        System.out.println("Response Code ="+ responseTime);
+        System.out.println("Response Time =" + responseTime);
         assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
         String responseBody = response.getBody().asString();
@@ -45,7 +42,6 @@ public class ZeptoGetTicketDetailsTest extends ZeptoLogin {
         assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
         System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
-        //System.out.println("Ticket details of Ticket Id : "+ ticketId);
 
     }
 }

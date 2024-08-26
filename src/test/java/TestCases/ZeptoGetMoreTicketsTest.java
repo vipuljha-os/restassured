@@ -12,12 +12,12 @@ import static org.testng.Assert.assertTrue;
 
 public class ZeptoGetMoreTicketsTest extends ZeptoLogin {
     @Test
-    public void getMoreTickets(){
+    public void getMoreTickets() {
         Response response = given()
                 .cookies(cookies)
-                .formParam("type","5")
-                .formParam("status","P")
-                .formParam("customer_id","201168189")
+                .formParam("type", "5")
+                .formParam("status", "P")
+                .formParam("customer_id", "201168189")
                 .when()
                 .post(ZeptoGetTicketList);
 

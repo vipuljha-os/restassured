@@ -1,6 +1,6 @@
 package TestCases;
 
-import FileUtility.FileeLib;
+import FileUtility.FileLibOne;
 import Generic.ZeptoLogin;
 import Generic.ZeptoRoutes;
 import io.restassured.RestAssured;
@@ -17,13 +17,13 @@ public class ZeptoTicketDisposeTest extends ZeptoLogin {
     @Test
     public void disposeTicket() throws IOException {
 
-        String ticketId = FileeLib.getPropertyData("ticketId");
-        String taskId = FileeLib.getPropertyData("taskId");
+        String ticketId = FileLibOne.getPropertyData("ticketId");
+        String taskId = FileLibOne.getPropertyData("taskId");
 
         Response response = RestAssured.given()
-                .formParam("task_id",taskId)
+                .formParam("task_id", taskId)
                 .formParam("ticket_id", ticketId)
-                .formParam("sub_status","CO")
+                .formParam("sub_status", "CO")
                 .cookies(cookies)
                 .post(ZeptoRoutes.ticketDispose);
 
@@ -35,7 +35,7 @@ public class ZeptoTicketDisposeTest extends ZeptoLogin {
 
         //Response time validation
         long responseTime = response.getTime();
-        System.out.println("Response Code ="+ responseTime);
+        System.out.println("Response Time =" + responseTime);
         assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
         // Parameter validation
@@ -47,6 +47,6 @@ public class ZeptoTicketDisposeTest extends ZeptoLogin {
         assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
         System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
-        System.out.println("Ticket has been disposed successfully with Ticket_Id : "+ ticketId);
+        System.out.println("Ticket has been disposed successfully with Ticket_Id : " + ticketId);
     }
 }

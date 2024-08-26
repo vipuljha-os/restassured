@@ -1,4 +1,5 @@
 package Generic;
+
 import FileUtility.FileLib;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookies;
@@ -14,7 +15,7 @@ public class ZeptoLogin {
     public Cookies cookies;
 
     @BeforeClass
-    public void Zeptologin() throws InterruptedException {
+    public void Zeptologin() {
         String username = "dummyEmail@kapturecrm.com";
         String password = "Test@1234";
 
@@ -22,7 +23,7 @@ public class ZeptoLogin {
                 .queryParam("username", username)
                 .queryParam("password", password)
                 .get(Zeptologin);
-                 response.then().log().all();
+        response.then().log().all();
 
         cookies = response.getDetailedCookies();
         System.out.println("*****************************");

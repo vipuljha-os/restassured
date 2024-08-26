@@ -18,7 +18,7 @@ public class ZeptoGetAllPendingTicketsTest extends ZeptoLogin {
         Response response = given()
                 .cookies(cookies)
                 .formParam("status", "P")
-                .formParam("type","2")
+                .formParam("type", "2")
                 .when()
                 .post(ZeptoGetTicketList);
 

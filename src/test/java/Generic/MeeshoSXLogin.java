@@ -14,7 +14,7 @@ public class MeeshoSXLogin {
     public Cookies cookies;
 
     @BeforeClass
-    public void Login() throws InterruptedException {
+    public void Login() {
         String username = "meeshosxtest1";
         String password = "Kapture@1";
 

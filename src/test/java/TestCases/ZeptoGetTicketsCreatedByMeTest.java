@@ -16,7 +16,7 @@ public class ZeptoGetTicketsCreatedByMeTest extends ZeptoLogin {
         Response response = given().contentType("application/json")
                 .cookies(cookies)
                 .formParam("type", "6")
-                .formParam("status","P")
+                .formParam("status", "P")
                 .when()
                 .post(ZeptoGetTicketList);
 

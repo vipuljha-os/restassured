@@ -18,7 +18,7 @@ public class GetCannedResponseTest extends MeeshoSXLogin {
         Response response = given()
                 .cookies(cookies)
                 .formParam("type", "O")
-                .formParam("order_by","desc")
+                .formParam("order_by", "desc")
                 .when()
                 .post(cannedResponse);
 

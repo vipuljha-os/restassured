@@ -24,7 +24,7 @@ public class ZeptoAddTicketTest extends ZeptoLogin {
                 //.formParams(map)
                 .formParam("customer_id", "206153489")
                 .formParam("contact_id", "224574114")
-                .formParam("customer_name", "Mansi Amrutwar")
+                .formParam("customer_name", "Test By Kapture")
                 .formParam("customer_email", "")
                 .formParam("customer_phone", "7083223291")
                 .formParam("folder_id", "634222")

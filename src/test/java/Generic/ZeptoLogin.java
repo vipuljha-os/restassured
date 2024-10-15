@@ -17,7 +17,7 @@ public class ZeptoLogin {
     @BeforeClass
     public void Zeptologin() {
         String username = "dummyEmail@kapturecrm.com";
-        String password = "Test@1234";
+        String password = "Test@12345";
 
         Response response = RestAssured.given()
                 .queryParam("username", username)

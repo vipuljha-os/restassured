@@ -26,6 +26,7 @@ pipelines:
               if [ -z "$FAILED_TESTS" ]; then
                 FAILED_TESTS="None"
               fi
-              MESSAGE="API suite completed. Final Test Results: Tests: $TESTS, Failures: $FAILURES, Errors: $ERRORS, Skipped: $SKIPPED. Failed Tests: $FAILED_TESTS"
+              MESSAGE="The API suite has been completed for the client BigBasket.
+              Final Test Results: Tests: $TESTS, Failures: $FAILURES, Errors: $ERRORS, Skipped: $SKIPPED. Failed Tests: $FAILED_TESTS"
               curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
             - set -e

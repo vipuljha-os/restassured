@@ -4,22 +4,21 @@
     </listeners>
     <test name="KaptureBackend">
         <classes>
-            <class name="TestCases.ZeptoAddTicketTest" />
-            <class name="TestCases.ZeptoGetTicketDetailsTest" />
-            <class name="TestCases.ZeptoGetTicketsCreatedByMeTest" />
-            <class name="TestCases.ZeptoGetAssignedToMeTest" />
-            <class name="TestCases.ZeptoAllCompleteTicketsTest" />
-            <class name="TestCases.ZeptoGetAllPendingTicketsTest" />
-            <class name="TestCases.ZeptoUnassignedTicketsTest" />
-            <class name="TestCases.ZeptoTicketDisposeTest" />
-            <class name="TestCases.ZeptoAllJunkTicketsTest" />
-            <class name="TestCases.ZeptoCompletedByMeTest" />
-            <class name="TestCases.ZeptoJunkTicketTest" />
-            <class name="TestCases.ZeptoGetMoreTicketsTest" />
-            <class name="TestCases.ZeptoGetHistoryDetailsTest" />
-            <class name="TestCases.ZeptoGetOrderListTest" />
-            <class name="TestCases.ZeptoGetOrderDetailTest" />
-            <class name="TestCases.ZeptoGetOtherOrderDetailTest" />
+            <class name="TestCases.BigabasketGetOrderListTest" />
+            <class name="TestCases.BigbasketAllCompleteTicketsTest" />
+            <class name="TestCases.BigbasketAllJunkTicketsTest" />
+            <class name="TestCases.BigbasketCompletedByMeTest" />
+            <class name="TestCases.BigbasketDisposeTicketTest" />
+            <class name="TestCases.BigBasketGetAllPendingTicketsTest" />
+            <class name="TestCases.BigbasketGetAssignedToMeTest" />
+            <class name="TestCases.BigbasketGetHistoryDetailsTest" />
+            <class name="TestCases.BigbasketGetMoreTicketsTest" />
+            <class name="TestCases.BigbasketGetTicketDetailsTest" />
+            <class name="TestCases.BigbasketGetTicketsCreatedByMeTest" />
+            <class name="TestCases.BigbasketJunkTicketTest" />
+            <class name="TestCases.BigbasketReopenTest" />
+            <class name="TestCases.BigBasketTicketSearchByTicketIDTest" />
+            <class name="TestCases.BigBasketUnassignedTicketsTest" />
         </classes>
     </test>
 </suite>

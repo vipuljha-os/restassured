@@ -71,8 +71,7 @@ public class CruiseSailingPricingDetailsTest {
         //Parameter validation
         JsonPath jsonPath = new JsonPath(responseBody);
         Object ForResponseParametersValidation_Status = jsonPath.get("status");
-
-        (ForResponseParametersValidation_Status, equalTo("success"));
+        assertThat(ForResponseParametersValidation_Status, equalTo("success"));
         Object ForResponseParametersValidation_Message = jsonPath.get("message");
         assertThat(ForResponseParametersValidation_Message, equalTo("Sailings Details"));
         System.out.println("******************************");

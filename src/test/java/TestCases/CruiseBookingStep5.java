@@ -2,12 +2,18 @@ package TestCases;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.annotations.Test;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.util.Map;
+import java.util.Random;
+
+import static TestCases.CruiseBookingStep4.extractCruiseBookingDetails;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.isEmptyString;
 import static org.testng.Assert.assertTrue;
 
 public class CruiseBookingStep5 {
@@ -16,22 +22,44 @@ public class CruiseBookingStep5 {
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 18000;
 
-    @Test
-    public void VerifyCruiseBookingStep5() {
+    public static void main(String[] arg) {
+        VerifyCruiseBookingStep5();
+    }
+
+    public static JSONObject VerifyCruiseBookingStep5() {
+        CruiseBookingStep4 cruiseBookingStep4 = new CruiseBookingStep4();
+        JSONObject response1 = cruiseBookingStep4.VerifyCruiseBookingStep4();
+
+        // Extract required booking details
+        Map<String, String> bookingDetails = extractCruiseBookingDetails(response1);
+
+        // Extract individual parameters
+        String sailingType = bookingDetails.get("sailing_type");
+        String sailingDate = bookingDetails.get("sailing_date");
+        String categoryId = bookingDetails.get("category_id");
+        //  long cruiseId = (long) response1.get("cruise_id");
+
+        System.out.println("Sailing Type: " + sailingType);
+        System.out.println("Sailing Date: " + sailingDate);
+        System.out.println("Category ID: " + categoryId);
+        // System.out.println("Cruise ID: " + cruiseId);
+
+        // Prepare the request body
         String requestBody = "{\n" +
-                "    \"cruise_id\": \"61\",\n" +
+                "    \"cruise_id\":\"61\",\n" +
                 "    \"total_room\": \"1\",\n" +
-                "    \"sailing_date\": \"07/18/2025\",\n" +
-                "    \"sailing_type\": \"2_day\",\n" +
+                "    \"sailing_date\": \"" + sailingDate + "\",\n" +
+                "    \"sailing_type\": \"" + sailingType + "\",\n" +
                 "    \"guest_count_details\": [\n" +
                 "        {\n" +
                 "            \"adult\": \"2\",\n" +
                 "            \"child\": \"0\",\n" +
                 "            \"infant\": \"0\",\n" +
-                "            \"category_id\": \"183\"\n" +
+                "            \"category_id\":\"" + categoryId + "\"\n" +
                 "        }\n" +
                 "    ]\n" +
                 "}";
+        System.out.println("Request Body for Step 5:\n" + requestBody);
 
         // API Request
         Response response = given()
@@ -43,22 +71,43 @@ public class CruiseBookingStep5 {
 
         // Logging the Response
         response.then().log().all();
-
         // Validating the Response
         validateStatusCode(response);
         validateResponseTime(response);
         validateResponseBody(response);
+        //return 0;
+
+        String responseBody = response.getBody().asString();
+        System.out.println("**************** response of step 5 ****************");
+        System.out.println(requestBody);
+        JSONParser parser = new JSONParser();
+        JSONObject res = null;
+        try {
+            res = (JSONObject) parser.parse(responseBody);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        JSONArray arr = (JSONArray) res.get("room_details");
+        if (arr != null) {
+            int size = arr.size();
+            Random random = new Random();
+            int randomNumber = random.nextInt(size);
+            JSONObject obj = (JSONObject) arr.get(randomNumber);
+            System.out.println(obj);
+            return res;
+        }
+        return null;
     }
 
     // Validate the status code
-    private void validateStatusCode(Response response) {
+    private static void validateStatusCode(Response response) {
         int statusCode = response.statusCode();
         System.out.println("Status Code: " + statusCode);
         response.then().statusCode(200);
     }
 
     // Validate the response time
-    private void validateResponseTime(Response response) {
+    private static void validateResponseTime(Response response) {
         long responseTime = response.getTime();
         System.out.println("Response Time: " + responseTime + "ms");
         assertTrue(responseTime < MAX_RESPONSE_TIME,
@@ -66,7 +115,7 @@ public class CruiseBookingStep5 {
     }
 
     // Validate the response body
-    private void validateResponseBody(Response response) {
+    private static void validateResponseBody(Response response) {
         String responseBody = response.getBody().asString();
         System.out.println("Response Body: " + responseBody);
         //Parameter validation

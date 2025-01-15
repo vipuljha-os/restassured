@@ -2,7 +2,11 @@ package TestCases;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
+
+import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,68 +22,58 @@ public class CruiseBookingStep7 {
 
     @Test
     public void VerifyCruiseBookingStep7() {
-        // Request body
-        String requestBody = "{\n" +
-                "    \"sailing_date\": \"07/18/2025\",\n" +
-                "    \"sailing_type\": \"2_day\",\n" +
-                "    \"cruise_id\": \"61\",\n" +
-                "    \"category_id\": \"183\",\n" +
-                "    \"guest_details\": [\n" +
-                "        {\n" +
-                "            \"phone\": 9876543446,\n" +
-                "            \"dob\": \"11/01/1990\",\n" +
-                "            \"last_name\": \"Albert\",\n" +
-                "            \"room_id\": \"6094\",\n" +
-                "            \"title\": \"Mr.\",\n" +
-                "            \"city\": \"NYC\",\n" +
-                "            \"country\": \"USA\",\n" +
-                "            \"nationality\": \"USAA\",\n" +
-                "            \"state\": \"Florida\",\n" +
-                "            \"passport_no\": \"A298765\",\n" +
-                "            \"passport_expiry_date\": \"04/02/2030\",\n" +
-                "            \"first_name\": \"Qwerty\",\n" +
-                "            \"address\": \"1st Cross dummy details, 37/a\",\n" +
-                "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" +
-                "            \"room_no\": \"4037\",\n" +
-                "            \"gender\": \"Male\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"phone\": 9876543446,\n" +
-                "            \"dob\": \"11/01/1990\",\n" +
-                "            \"last_name\": \"Albert\",\n" +
-                "            \"room_id\": \"6094\",\n" +
-                "            \"title\": \"Mr.\",\n" +
-                "            \"city\": \"NYC\",\n" +
-                "            \"country\": \"USA\",\n" +
-                "            \"nationality\": \"USAA\",\n" +
-                "            \"state\": \"Florida\",\n" +
-                "            \"passport_no\": \"A298765\",\n" +
-                "            \"passport_expiry_date\": \"04/02/2030\",\n" +
-                "            \"first_name\": \"Pinto\",\n" +
-                "            \"address\": \"1st Cross dummy details, 37/a\",\n" +
-                "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" +
-                "            \"room_no\": \"4037\",\n" +
-                "            \"gender\": \"Male\"\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"total_room\": 1\n" +
-                "}";
+        CruiseBookingStep5 cruiseBookingStep5 = new CruiseBookingStep5();
+        // Get the response of Step 1 (assuming the response object is stored in CruiseBookingStep1.responseOfStep1)
+        JSONObject response1 = cruiseBookingStep5.VerifyCruiseBookingStep5();
+        System.out.println("***********");
 
+
+        // Get the room_id name
+        String sailingDate = (String) response1.get("sailing_date");
+        System.out.println("************" + sailingDate);
+
+        // Get the room_id name
+        String sailing_type = (String) response1.get("sailing_type");
+        System.out.println("************" + sailing_type);
+
+        JSONArray arr = (JSONArray) response1.get("room_details");
+        String room_id = null;
+        String categoryId = null;
+        if (arr != null) {
+            int size = arr.size();
+            Random random = new Random();
+            int randomNumber = random.nextInt(size);
+            JSONObject obj = (JSONObject) arr.get(randomNumber);
+            System.out.println(obj);
+
+            // Get the room_id name
+            room_id = (String) obj.get("room_id");
+            System.out.println("************" + room_id);
+
+            // Get the room_id name
+            categoryId = (String) obj.get("category_id");
+            System.out.println("************" + categoryId);
+
+        }
+
+        // Request body
+        String requestBody = "{\n" + "    \"sailing_date\": \"" + sailingDate + "\",\n" + "    \"sailing_type\": \"" + sailing_type + "\",\n" + "    \"cruise_id\": \"61\",\n" + "    \"category_id\": \"" + categoryId + "\",\n" + "    \"guest_details\": [\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Qwerty\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        },\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Pinto\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        }\n" + "    ],\n" + "    \"total_room\": 1\n" + "}";
+
+        System.out.println(requestBody);
         // API Request
-        Response response = given()
-                .header("Content-Type", CONTENT_TYPE)
-                .header("Authorization", AUTHORIZATION_HEADER)
-                .body(requestBody)
-                .when()
-                .post(URL);
+        Response response = given().header("Content-Type", CONTENT_TYPE).header("Authorization", AUTHORIZATION_HEADER).body(requestBody).when().post(URL);
 
         // Logging the Response
         response.then().log().all();
-
+        String responseBody = response.getBody().asString();
+        System.out.println("**************** response of step 6 ****************");
+        System.out.println(requestBody);
         // Validating the Response
         validateStatusCode(response);
         validateResponseTime(response);
-        //validateResponseBody(response);
+        validateResponseBody(response);
+        System.out.println("**************** response of step 5 ****************");
+        System.out.println(response);
     }
 
     // Validate the status code
@@ -93,8 +87,7 @@ public class CruiseBookingStep7 {
     private void validateResponseTime(Response response) {
         long responseTime = response.getTime();
         System.out.println("Response Time: " + responseTime + "ms");
-        assertTrue(responseTime < MAX_RESPONSE_TIME,
-                "Response time exceeds the acceptable threshold of " + MAX_RESPONSE_TIME + " milliseconds");
+        assertTrue(responseTime < MAX_RESPONSE_TIME, "Response time exceeds the acceptable threshold of " + MAX_RESPONSE_TIME + " milliseconds");
     }
 
     // Validate the response body
@@ -113,8 +106,7 @@ public class CruiseBookingStep7 {
         if (paymentLink != null && !paymentLink.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'paymentLink' has a valid value: " + paymentLink);
-            assertThat("Field 'paymentLink' should have a valid value!",
-                    paymentLink.toString().trim(), not(isEmptyOrNullString()));
+            assertThat("Field 'paymentLink' should have a valid value!", paymentLink.toString().trim(), not(isEmptyOrNullString()));
         } else {
             // Value is null or empty
             System.out.println("Field 'paymentLink' is null or empty. Failing test case!");
@@ -128,8 +120,7 @@ public class CruiseBookingStep7 {
         if (bookingId != null && !bookingId.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'bookingId' has a valid value: " + bookingId);
-            assertThat("Field 'bookingId' should have a valid value!",
-                    bookingId.toString().trim(), not(isEmptyOrNullString()));
+            assertThat("Field 'bookingId' should have a valid value!", bookingId.toString().trim(), not(isEmptyOrNullString()));
         } else {
             // Value is null or empty
             System.out.println("Field 'bookingId' is null or empty. Failing test case!");

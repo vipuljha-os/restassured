@@ -2,7 +2,13 @@ package TestCases;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
+
+import java.util.Random;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,88 +22,82 @@ public class CruiseBookingStep6 {
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 18000;
 
+    public static void main(String[] args) {
+        VerifyCruiseBookingStep6();
+    }
+
     @Test
-    public void VerifyCruiseBookingStep6() {
+    public static void VerifyCruiseBookingStep6() {
+        CruiseBookingStep5 cruiseBookingStep5 = new CruiseBookingStep5();
+        // Get the response of Step 1 (assuming the response object is stored in CruiseBookingStep1.responseOfStep1)
+        JSONObject response1 = cruiseBookingStep5.VerifyCruiseBookingStep5();
+        System.out.println("***********");
+
+
+        // Get the room_id name
+        String sailingDate = (String) response1.get("sailing_date");
+        System.out.println("************" + sailingDate);
+
+        // Get the room_id name
+        String sailing_type = (String) response1.get("sailing_type");
+        System.out.println("************" + sailing_type);
+
+        JSONArray arr = (JSONArray) response1.get("room_details");
+        String room_id = null;
+        String categoryId = null;
+        if (arr != null) {
+            int size = arr.size();
+            Random random = new Random();
+            int randomNumber = random.nextInt(size);
+            JSONObject obj = (JSONObject) arr.get(randomNumber);
+            System.out.println(obj);
+
+            // Get the room_id name
+            room_id = (String) obj.get("room_id");
+            System.out.println("************" + room_id);
+
+            // Get the room_id name
+            categoryId = (String) obj.get("category_id");
+            System.out.println("************" + categoryId);
+
+        }
+
         // Request body
-        String requestBody = "{\n" +
-                "    \"sailing_date\": \"07/18/2025\",\n" +
-                "    \"sailing_type\": \"2_day\",\n" +
-                "    \"cruise_id\": \"61\",\n" +
-                "    \"category_id\": \"183\",\n" +
-                "    \"guest_details\": [\n" +
-                "        {\n" +
-                "            \"phone\": 9876543446,\n" +
-                "            \"dob\": \"11/01/1990\",\n" +
-                "            \"last_name\": \"Albert\",\n" +
-                "            \"room_id\": \"6090\",\n" +
-                "            \"title\": \"Mr.\",\n" +
-                "            \"city\": \"NYC\",\n" +
-                "            \"country\": \"USA\",\n" +
-                "            \"nationality\": \"USAA\",\n" +
-                "            \"state\": \"Florida\",\n" +
-                "            \"passport_no\": \"A298765\",\n" +
-                "            \"passport_expiry_date\": \"04/02/2030\",\n" +
-                "            \"first_name\": \"Qwerty\",\n" +
-                "            \"address\": \"1st Cross dummy details, 37/a\",\n" +
-                "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" +
-                "            \"room_no\": \"4009\",\n" +
-                "            \"gender\": \"Male\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"phone\": 9876543446,\n" +
-                "            \"dob\": \"11/01/1990\",\n" +
-                "            \"last_name\": \"Albert\",\n" +
-                "            \"room_id\": \"6090\",\n" +
-                "            \"title\": \"Mr.\",\n" +
-                "            \"city\": \"NYC\",\n" +
-                "            \"country\": \"USA\",\n" +
-                "            \"nationality\": \"USAA\",\n" +
-                "            \"state\": \"Florida\",\n" +
-                "            \"passport_no\": \"A298765\",\n" +
-                "            \"passport_expiry_date\": \"04/02/2030\",\n" +
-                "            \"first_name\": \"Pinto\",\n" +
-                "            \"address\": \"1st Cross dummy details, 37/a\",\n" +
-                "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" +
-                "            \"room_no\": \"4009\",\n" +
-                "            \"gender\": \"Male\"\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"total_room\": 1\n" +
-                "}";
+        String requestBody = "{\n" + "    \"sailing_date\": \"" + sailingDate + "\",\n" + "    \"sailing_type\": \"" + sailing_type + "\",\n" + "    \"cruise_id\": \"61\",\n" + "    \"category_id\": \"" + categoryId + "\",\n" + "    \"guest_details\": [\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Qwerty\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        },\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Pinto\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        }\n" + "    ],\n" + "    \"total_room\": 1\n" + "}";
+
+        System.out.println(requestBody);
         // API Request
-        Response response = given()
-                .header("Content-Type", CONTENT_TYPE)
-                .header("Authorization", AUTHORIZATION_HEADER)
-                .body(requestBody)
-                .when()
-                .post(URL);
+        Response response = given().header("Content-Type", CONTENT_TYPE).header("Authorization", AUTHORIZATION_HEADER).body(requestBody).when().post(URL);
 
         // Logging the Response
         response.then().log().all();
-
+        String responseBody = response.getBody().asString();
+        System.out.println("**************** response of step 6 ****************");
+        System.out.println(requestBody);
         // Validating the Response
         validateStatusCode(response);
         validateResponseTime(response);
         validateResponseBody(response);
+        System.out.println("**************** response of step 5 ****************");
+        System.out.println(response);
     }
 
     // Validate the status code
-    private void validateStatusCode(Response response) {
+    private static void validateStatusCode(Response response) {
         int statusCode = response.statusCode();
         System.out.println("Status Code: " + statusCode);
         response.then().statusCode(200);
     }
 
     // Validate the response time
-    private void validateResponseTime(Response response) {
+    private static void validateResponseTime(Response response) {
         long responseTime = response.getTime();
         System.out.println("Response Time: " + responseTime + "ms");
-        assertTrue(responseTime < MAX_RESPONSE_TIME,
-                "Response time exceeds the acceptable threshold of " + MAX_RESPONSE_TIME + " milliseconds");
+        assertTrue(responseTime < MAX_RESPONSE_TIME, "Response time exceeds the acceptable threshold of " + MAX_RESPONSE_TIME + " milliseconds");
     }
 
     // Validate the response body
-    private void validateResponseBody(Response response) {
+    private static void validateResponseBody(Response response) {
         String responseBody = response.getBody().asString();
         System.out.println("Response Body: " + responseBody);
         //Parameter validation
@@ -112,8 +112,7 @@ public class CruiseBookingStep6 {
         if (guestDetailsRoomId != null && !guestDetailsRoomId.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'guestDetailsRoomId' has a valid value: " + guestDetailsRoomId);
-            assertThat("Field 'guestDetailsRoomId' should have a valid value!",
-                    guestDetailsRoomId.toString().trim(), not(isEmptyOrNullString()));
+            assertThat("Field 'guestDetailsRoomId' should have a valid value!", guestDetailsRoomId.toString().trim(), not(isEmptyOrNullString()));
         } else {
             // Value is null or empty
             System.out.println("Field 'guestDetailsRoomId' is null or empty. Failing test case!");
@@ -127,8 +126,7 @@ public class CruiseBookingStep6 {
         if (paymentDetailTotal != null && !paymentDetailTotal.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'paymentDetailTotal' has a valid value: " + paymentDetailTotal);
-            assertThat("Field 'paymentDetailTotal' should have a valid value!",
-                    paymentDetailTotal.toString().trim(), not(isEmptyOrNullString()));
+            assertThat("Field 'paymentDetailTotal' should have a valid value!", paymentDetailTotal.toString().trim(), not(isEmptyOrNullString()));
         } else {
             // Value is null or empty
             System.out.println("Field 'paymentDetailTotal' is null or empty. Failing test case!");
@@ -141,8 +139,7 @@ public class CruiseBookingStep6 {
         if (paymentDetailTotalTax != null && !paymentDetailTotalTax.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'paymentDetailTotalTax' has a valid value: " + paymentDetailTotalTax);
-            assertThat("Field 'paymentDetailTotalTax' should have a valid value!",
-                    paymentDetailTotalTax.toString().trim(), not(isEmptyOrNullString()));
+            assertThat("Field 'paymentDetailTotalTax' should have a valid value!", paymentDetailTotalTax.toString().trim(), not(isEmptyOrNullString()));
         } else {
             // Value is null or empty
             System.out.println("Field 'paymentDetailTotalTax' is null or empty. Failing test case!");
@@ -155,8 +152,7 @@ public class CruiseBookingStep6 {
         if (paymentDetailPriceDetailGuestIndex != null && !paymentDetailPriceDetailGuestIndex.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'paymentDetailPriceDetailGuestIndex' has a valid value: " + paymentDetailPriceDetailGuestIndex);
-            assertThat("Field 'paymentDetailPriceDetailGuestIndex' should have a valid value!",
-                    paymentDetailPriceDetailGuestIndex.toString().trim(), not(isEmptyOrNullString()));
+            assertThat("Field 'paymentDetailPriceDetailGuestIndex' should have a valid value!", paymentDetailPriceDetailGuestIndex.toString().trim(), not(isEmptyOrNullString()));
         } else {
             // Value is null or empty
             System.out.println("Field 'paymentDetailPriceDetailGuestIndex' is null or empty. Failing test case!");
@@ -169,8 +165,7 @@ public class CruiseBookingStep6 {
         if (paymentTotal != null && !paymentTotal.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'paymentTotal' has a valid value: " + paymentTotal);
-            assertThat("Field 'paymentTotal' should have a valid value!",
-                    paymentTotal.toString().trim(), not(isEmptyOrNullString()));
+            assertThat("Field 'paymentTotal' should have a valid value!", paymentTotal.toString().trim(), not(isEmptyOrNullString()));
         } else {
             // Value is null or empty
             System.out.println("Field 'paymentTotal' is null or empty. Failing test case!");

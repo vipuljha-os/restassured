@@ -22,12 +22,17 @@ public class CruiseBookingStep4 {
     private static final int MAX_RESPONSE_TIME = 18000;
 
     public static JSONObject twoDayObject = null;
-    @Test
-    public static void main(String[] arg) {
-        VerifyCruiseBookingStep4();
-    }
+//    @Test
+//    public static void main(String[] arg) {
+//        VerifyCruiseBookingStep4();
+//    }
 
     @Test
+    public void testCruiseBookingStep4() {
+        // Call the helper method to execute the API logic
+        Object result = VerifyCruiseBookingStep4();
+    }
+
     public static JSONObject VerifyCruiseBookingStep4() {
         try {
             CruiseBookingStep3 cruiseBookingStep3 = new CruiseBookingStep3();

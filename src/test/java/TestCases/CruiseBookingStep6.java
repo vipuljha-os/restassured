@@ -4,8 +4,6 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
 
 import java.util.Random;
@@ -21,12 +19,16 @@ public class CruiseBookingStep6 {
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 18000;
-    @Test
-    public static void main(String[] args) {
-        VerifyCruiseBookingStep6();
-    }
-    @Test
-    public static void VerifyCruiseBookingStep6() {
+//    @Test
+//    public static void main(String[] args) {
+//        VerifyCruiseBookingStep6();
+//    }
+@Test
+public void testCruiseBookingStep6() {
+    // Call the helper method to execute the API logic
+    Object result = VerifyCruiseBookingStep6();
+}
+    public static Object VerifyCruiseBookingStep6() {
         CruiseBookingStep5 cruiseBookingStep5 = new CruiseBookingStep5();
         // Get the response of Step 1 (assuming the response object is stored in CruiseBookingStep1.responseOfStep1)
         JSONObject response1 = cruiseBookingStep5.VerifyCruiseBookingStep5();
@@ -79,6 +81,7 @@ public class CruiseBookingStep6 {
         validateResponseBody(response);
         System.out.println("**************** response of step 5 ****************");
         System.out.println(response);
+        return null;
     }
 
     // Validate the status code

@@ -23,11 +23,17 @@ public class CruiseBookingStep1 {
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 15000;
 
+//    @Test
+//    public static void main(String[] arg) {
+//        verifyCruiseBookingStep1Test();
+//    }
+
     @Test
-    public static void main(String[] arg) {
-        verifyCruiseBookingStep1Test();
+    public void testCruiseBookingStep1() {
+        // Call the helper method to execute the API logic
+        JSONObject result = verifyCruiseBookingStep1Test();
     }
-    @Test
+
     public static JSONObject verifyCruiseBookingStep1Test() {
         // Generate a random year/month date after 6 months
         String randomYearMonth = generateRandomDateAfterSixMonths();

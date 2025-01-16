@@ -21,7 +21,11 @@ public class CruiseBookingStep7 {
     private static final int MAX_RESPONSE_TIME = 18000;
 
     @Test
-    public void VerifyCruiseBookingStep7() {
+    public void testCruiseBookingStep7() {
+        // Call the helper method to execute the API logic
+        Object result = VerifyCruiseBookingStep7();
+    }
+    public Object VerifyCruiseBookingStep7() {
         CruiseBookingStep5 cruiseBookingStep5 = new CruiseBookingStep5();
         // Get the response of Step 1 (assuming the response object is stored in CruiseBookingStep1.responseOfStep1)
         JSONObject response1 = cruiseBookingStep5.VerifyCruiseBookingStep5();
@@ -73,6 +77,7 @@ public class CruiseBookingStep7 {
         validateResponseTime(response);
         validateResponseBody(response);
         System.out.println(response);
+        return null;
     }
 
     // Validate the status code

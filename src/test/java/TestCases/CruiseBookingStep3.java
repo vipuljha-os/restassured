@@ -20,11 +20,17 @@ public class CruiseBookingStep3 {
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 30000;
+
+    //    @Test
+//    public static void main(String[] arg) {
+//        CruiseBookingStep3();
+//    }
     @Test
-    public static void main(String[] arg) {
-        CruiseBookingStep3();
+    public void testCruiseBookingStep3() {
+        // Call the helper method to execute the API logic
+        Object result = CruiseBookingStep3();
     }
-    @Test
+
     public static Object CruiseBookingStep3() {
         // Request body
         String requestBody = "{\n" + "    \"fare_type\": \"retail\",\n" + "    \"live_data\": true,\n" + "    \"cruise_ids\": \"61\"\n" + "}";

@@ -22,11 +22,17 @@ public class CruiseBookingStep5 {
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 18000;
+//    @Test
+//    public static void main(String[] arg) {
+//        VerifyCruiseBookingStep5();
+//    }
+
     @Test
-    public static void main(String[] arg) {
-        VerifyCruiseBookingStep5();
+    public void testCruiseBookingStep5() {
+        // Call the helper method to execute the API logic
+        Object result = VerifyCruiseBookingStep5();
     }
-    @Test
+
     public static JSONObject VerifyCruiseBookingStep5() {
         CruiseBookingStep4 cruiseBookingStep4 = new CruiseBookingStep4();
         JSONObject response1 = cruiseBookingStep4.VerifyCruiseBookingStep4();

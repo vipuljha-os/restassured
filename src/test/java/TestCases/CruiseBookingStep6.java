@@ -21,11 +21,10 @@ public class CruiseBookingStep6 {
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 18000;
-
+    @Test
     public static void main(String[] args) {
         VerifyCruiseBookingStep6();
     }
-
     @Test
     public static void VerifyCruiseBookingStep6() {
         CruiseBookingStep5 cruiseBookingStep5 = new CruiseBookingStep5();

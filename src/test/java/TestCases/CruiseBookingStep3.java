@@ -20,11 +20,10 @@ public class CruiseBookingStep3 {
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 30000;
-
+    @Test
     public static void main(String[] arg) {
         CruiseBookingStep3();
     }
-
     @Test
     public static Object CruiseBookingStep3() {
         // Request body

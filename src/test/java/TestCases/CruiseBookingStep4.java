@@ -22,7 +22,7 @@ public class CruiseBookingStep4 {
     private static final int MAX_RESPONSE_TIME = 18000;
 
     public static JSONObject twoDayObject = null;
-
+    @Test
     public static void main(String[] arg) {
         VerifyCruiseBookingStep4();
     }

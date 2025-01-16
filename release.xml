@@ -4,21 +4,13 @@
     </listeners>
     <test name="KaptureBackend">
         <classes>
-            <class name="TestCases.BigabasketGetOrderListTest" />
-            <class name="TestCases.BigbasketAllCompleteTicketsTest" />
-            <class name="TestCases.BigbasketAllJunkTicketsTest" />
-            <class name="TestCases.BigbasketCompletedByMeTest" />
-            <class name="TestCases.BigbasketDisposeTicketTest" />
-            <class name="TestCases.BigBasketGetAllPendingTicketsTest" />
-            <class name="TestCases.BigbasketGetAssignedToMeTest" />
-            <class name="TestCases.BigbasketGetHistoryDetailsTest" />
-            <class name="TestCases.BigbasketGetMoreTicketsTest" />
-            <class name="TestCases.BigbasketGetTicketDetailsTest" />
-            <class name="TestCases.BigbasketGetTicketsCreatedByMeTest" />
-            <class name="TestCases.BigbasketJunkTicketTest" />
-            <class name="TestCases.BigbasketReopenTest" />
-            <class name="TestCases.BigBasketTicketSearchByTicketIDTest" />
-            <class name="TestCases.BigBasketUnassignedTicketsTest" />
+            <class name="TestCases.CruiseBookingStep1" />
+            <class name="TestCases.CruiseBookingStep2" />
+            <class name="TestCases.CruiseBookingStep3" />
+            <class name="TestCases.CruiseBookingStep4" />
+            <class name="TestCases.CruiseBookingStep5" />
+            <class name="TestCases.CruiseBookingStep6" />
+            <class name="TestCases.CruiseBookingStep7" />
         </classes>
     </test>
 </suite>

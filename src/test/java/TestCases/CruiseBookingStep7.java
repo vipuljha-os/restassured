@@ -66,13 +66,12 @@ public class CruiseBookingStep7 {
         // Logging the Response
         response.then().log().all();
         String responseBody = response.getBody().asString();
-        System.out.println("**************** response of step 6 ****************");
+        System.out.println("**************** response of step 7 ****************");
         System.out.println(requestBody);
         // Validating the Response
         validateStatusCode(response);
         validateResponseTime(response);
         validateResponseBody(response);
-        System.out.println("**************** response of step 5 ****************");
         System.out.println(response);
     }
 

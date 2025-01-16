@@ -1,12 +1,16 @@
 package TestCases;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.testng.annotations.Test;
+
 import java.time.LocalDate;
 import java.util.Random;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -19,10 +23,11 @@ public class CruiseBookingStep1 {
     private static final String CONTENT_TYPE = "application/json";
     private static final int MAX_RESPONSE_TIME = 15000;
 
+
     public static void main(String[] arg) {
         verifyCruiseBookingStep1Test();
     }
-
+    @Test
     public static JSONObject verifyCruiseBookingStep1Test() {
         // Generate a random year/month date after 6 months
         String randomYearMonth = generateRandomDateAfterSixMonths();
@@ -39,10 +44,8 @@ public class CruiseBookingStep1 {
         validateResponseBody(response);
 
         System.out.println("**************** Step 1 response ****************");
-        System.out.println(response);
-
         String responseBody = response.getBody().asString();
-
+        System.out.println(responseBody);
         JSONParser parser = new JSONParser();
         JSONObject res = null;
         try {

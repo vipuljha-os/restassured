@@ -6,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.testng.annotations.Test;
 
 import java.util.Map;
 import java.util.Random;
@@ -26,6 +27,7 @@ public class CruiseBookingStep5 {
         VerifyCruiseBookingStep5();
     }
 
+    @Test
     public static JSONObject VerifyCruiseBookingStep5() {
         CruiseBookingStep4 cruiseBookingStep4 = new CruiseBookingStep4();
         JSONObject response1 = cruiseBookingStep4.VerifyCruiseBookingStep4();

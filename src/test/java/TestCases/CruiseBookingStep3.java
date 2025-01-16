@@ -1,11 +1,15 @@
 package TestCases;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.testng.annotations.Test;
+
 import java.util.Random;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -21,6 +25,7 @@ public class CruiseBookingStep3 {
         CruiseBookingStep3();
     }
 
+    @Test
     public static Object CruiseBookingStep3() {
         // Request body
         String requestBody = "{\n" + "    \"fare_type\": \"retail\",\n" + "    \"live_data\": true,\n" + "    \"cruise_ids\": \"61\"\n" + "}";

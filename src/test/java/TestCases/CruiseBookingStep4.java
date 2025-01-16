@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class CruiseBookingStep4 {
         VerifyCruiseBookingStep4();
     }
 
+    @Test
     public static JSONObject VerifyCruiseBookingStep4() {
         try {
             CruiseBookingStep3 cruiseBookingStep3 = new CruiseBookingStep3();

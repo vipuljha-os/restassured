@@ -1,0 +1,1 @@
+{"uuid":"aea4701b-66c1-4729-9883-a584c7b23141","name":"TestCases.SearchTicketByEmailTest","children":["24f39e56-f07f-46a5-a109-fcd0149b6fc1"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1714472835923,"stop":1714472837163}],"afters":[],"start":1714472835904,"stop":1714472840306}

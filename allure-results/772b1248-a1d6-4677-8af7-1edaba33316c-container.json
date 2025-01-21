@@ -1,0 +1,1 @@
+{"uuid":"772b1248-a1d6-4677-8af7-1edaba33316c","name":"TestCases.ZeptoGetAllPendingTicketsTest","children":["6fac6726-d802-4f44-b5f8-aedac40a28eb"],"befores":[{"name":"Zeptologin","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1724238985599,"stop":1724238986037}],"afters":[],"start":1724238967199,"stop":1724239013889}

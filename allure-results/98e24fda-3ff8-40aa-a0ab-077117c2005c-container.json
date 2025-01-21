@@ -1,0 +1,1 @@
+{"uuid":"98e24fda-3ff8-40aa-a0ab-077117c2005c","name":"TestCases.ZeptoAllJunkTicketsTest","children":["f04eb09a-5d64-4d9a-9151-3226728fa7af"],"befores":[{"name":"Zeptologin","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1724231592980,"stop":1724231593451}],"afters":[],"start":1724231587073,"stop":1724231600219}

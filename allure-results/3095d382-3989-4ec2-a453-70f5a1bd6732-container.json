@@ -1,0 +1,1 @@
+{"uuid":"3095d382-3989-4ec2-a453-70f5a1bd6732","name":"TestCases.ZeptoUnassignedTicketsTest","children":["5e6b3d44-df53-47cc-9442-22af4e4620e5"],"befores":[{"name":"Zeptologin","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1724239472977,"stop":1724239473542}],"afters":[],"start":1724239446361,"stop":1724239493132}

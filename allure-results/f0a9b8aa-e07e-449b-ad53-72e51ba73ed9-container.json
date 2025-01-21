@@ -1,0 +1,1 @@
+{"uuid":"f0a9b8aa-e07e-449b-ad53-72e51ba73ed9","name":"TestCases.GetWatcherListTest","children":["3793960c-8e47-44a6-982e-48b0e2d1a956"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1714470552522,"stop":1714470552646}],"afters":[],"start":1714470540952,"stop":1714470590700}

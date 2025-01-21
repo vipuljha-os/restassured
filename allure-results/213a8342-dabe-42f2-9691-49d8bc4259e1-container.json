@@ -1,0 +1,1 @@
+{"uuid":"213a8342-dabe-42f2-9691-49d8bc4259e1","name":"TestCases.addNoteTest","children":["fdccc066-1de4-4c1e-bd80-717f6e5157e0"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1714470847690,"stop":1714470849515}],"afters":[],"start":1714470847667,"stop":1714470851031}

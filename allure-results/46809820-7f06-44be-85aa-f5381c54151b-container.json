@@ -1,0 +1,1 @@
+{"uuid":"46809820-7f06-44be-85aa-f5381c54151b","name":"TestCases.ZeptoGetOtherOrderDetailTest","children":["fcef480a-ea79-43bd-8d8e-7551d90f5136"],"befores":[{"name":"Zeptologin","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1724338189475,"stop":1724338189904}],"afters":[],"start":1724338139035,"stop":1724338190079}

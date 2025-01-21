@@ -1,0 +1,1 @@
+{"uuid":"f08add05-5ab5-45aa-af72-ef05c0122a5a","name":"TestCases.GetCannedResponseTest","children":["22991a11-942a-4103-b27f-6ef63c4b3837"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1724231630907,"stop":1724231631381}],"afters":[],"start":1724231626730,"stop":1724231639700}

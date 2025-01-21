@@ -1,0 +1,1 @@
+{"uuid":"cfd0ba89-647c-4922-8c19-de7ec5dfa61c","name":"TestCases.GetAllJunkTicketsTest","children":["c7ccf651-e3a8-485f-acf1-885d27f6360c"],"befores":[{"name":"Login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1724231589938,"stop":1724231590377}],"afters":[],"start":1724231587073,"stop":1724231600203}

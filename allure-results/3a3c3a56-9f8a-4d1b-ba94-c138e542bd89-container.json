@@ -1,0 +1,1 @@
+{"uuid":"3a3c3a56-9f8a-4d1b-ba94-c138e542bd89","name":"TestCases.TestGetAllJunkZepto","children":["2e17221b-a170-45b5-ac01-7181eb503325"],"befores":[{"name":"Zeptologin","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1713870927312,"stop":1713870928947}],"afters":[],"start":1713870927291,"stop":1713870934446}

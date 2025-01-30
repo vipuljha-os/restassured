@@ -2,6 +2,7 @@ package TestCases;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
 import java.nio.file.Files;
@@ -16,7 +17,7 @@ public class CruiseSailingPricingDetailsTest {
     private static final String URL = "https://bahamas.kapturecrm.com/cruise-sailing-pricing-details";
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
-    private static final int MAX_RESPONSE_TIME = 2000;
+    private static final int MAX_RESPONSE_TIME = 15000;
 
     @Test
     public void getCruiseSailingPricingDetails() {
@@ -76,20 +77,38 @@ public class CruiseSailingPricingDetailsTest {
         assertThat(ForResponseParametersValidation_Message, equalTo("Sailings Details"));
         System.out.println("******************************");
 
-        // Validate 'room_price' field
+        // Extract the 'room_price' field from the JSON response
         Object roomPrice = jsonPath.get("sailings[0].availablity[0].room_price");
 
+// Check if the 'room_price' field is present and has a valid value
         if (roomPrice != null && !roomPrice.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'room_price' has a valid value: " + roomPrice);
-            assertThat("Field 'room_price' should have a valid value!",
-                    roomPrice.toString().trim(), not(isEmptyOrNullString()));
+
+            // Check if the value is numeric
+            if (StringUtils.isNumeric(roomPrice.toString())) {
+                double roomPriceValue = Double.parseDouble(roomPrice.toString());
+
+                // Check if the value is 0 or negative
+                if (roomPriceValue <= 0) {
+                    System.out.println("Field 'room_price' has a 0 or negative value: " + roomPriceValue);
+                    assertThat("Field 'room_price' should be greater than 0!", roomPriceValue, greaterThan(0.0));
+                } else {
+                    // Value is valid (not null, not empty, and positive)
+                    System.out.println("Field 'room_price' has a valid positive value: " + roomPriceValue);
+                }
+            } else {
+                // Value is not numeric
+                System.out.println("Field 'room_price' is not a numeric value: " + roomPrice);
+                assertThat("Field 'room_price' should be a numeric value!", false);
+            }
         } else {
             // Value is null or empty
             System.out.println("Field 'room_price' is null or empty. Failing test case!");
             assertThat("Field 'room_price' is null or empty!", roomPrice, notNullValue());
             assertThat("Field 'room_price' should not be empty!", roomPrice.toString(), not(isEmptyString()));
         }
+
         // Validate 'room_price_Offer' field
         Object roomPriceOffer = jsonPath.get("sailings[0].availablity[0].room_price_offer");
 

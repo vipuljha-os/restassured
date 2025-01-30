@@ -2,6 +2,7 @@ package TestCases;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
@@ -118,13 +119,31 @@ public class CruiseBookingStep7 {
             assertThat("Field 'paymentLink' should not be empty!", paymentLink.toString(), not(isEmptyString()));
         }
 
-        // Validate 'bookingid' field
+        // Extract the 'booking_id' field from the JSON response
         Object bookingId = jsonPath.get("booking_id");
 
+// Check if the 'booking_id' field is present and has a valid value
         if (bookingId != null && !bookingId.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'bookingId' has a valid value: " + bookingId);
-            assertThat("Field 'bookingId' should have a valid value!", bookingId.toString().trim(), not(isEmptyOrNullString()));
+
+            // Check if the value is numeric
+            if (StringUtils.isNumeric(bookingId.toString())) {
+                long bookingIdValue = Long.parseLong(bookingId.toString());
+
+                // Check if the value is 0 or negative
+                if (bookingIdValue <= 0) {
+                    System.out.println("Field 'bookingId' has a 0 or negative value: " + bookingIdValue);
+                    assertThat("Field 'bookingId' should not be 0 or negative!", bookingIdValue, greaterThan(0L));
+                } else {
+                    // Value is valid (not null, not empty, and positive)
+                    System.out.println("Field 'bookingId' has a valid positive value: " + bookingIdValue);
+                }
+            } else {
+                // Value is not numeric
+                System.out.println("Field 'bookingId' is not a numeric value: " + bookingId);
+                assertThat("Field 'bookingId' should be a numeric value!", false);
+            }
         } else {
             // Value is null or empty
             System.out.println("Field 'bookingId' is null or empty. Failing test case!");

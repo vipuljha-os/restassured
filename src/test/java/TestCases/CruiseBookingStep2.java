@@ -2,6 +2,7 @@ package TestCases;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -132,8 +133,36 @@ public class CruiseBookingStep2 {
         assertThat(ForResponseParametersValidation_Status, equalTo("success"));
 
         // Additional validation based on your specific response structure
-        // For example, check if the 'session_id' field is present
+        // Extract the 'session_id' field from the JSON response
         Object sessionId = jsonPath.get("session_id");
-        assertThat("Field 'session_id' should have a valid value!", sessionId.toString().trim(), not(isEmptyOrNullString()));
+
+// Check if the 'session_id' field is present and has a valid value
+        if (sessionId != null && !sessionId.toString().trim().isEmpty()) {
+            // Value is not null or empty
+            System.out.println("Field 'session_id' has a valid value: " + sessionId);
+
+            // Check if the value is numeric
+            if (StringUtils.isNumeric(sessionId.toString())) {
+                double sessionIdValue = Double.parseDouble(sessionId.toString());
+
+                // Check if the value is 0 or negative
+                if (sessionIdValue <= 0) {
+                    System.out.println("Field 'session_id' has a 0 or negative value: " + sessionIdValue);
+                    assertThat("Field 'session_id' should not be 0 or negative!", sessionIdValue, greaterThan(0.0));
+                } else {
+                    // Value is valid (not null, not empty, and positive)
+                    System.out.println("Field 'session_id' has a valid positive value: " + sessionIdValue);
+                }
+            } else {
+                // Value is not numeric
+                System.out.println("Field 'session_id' is not a numeric value: " + sessionId);
+                assertThat("Field 'session_id' should be a numeric value!", false);
+            }
+        } else {
+            // Value is null or empty
+            System.out.println("Field 'session_id' is null or empty. Failing test case!");
+            assertThat("Field 'session_id' is null or empty!", sessionId, notNullValue());
+            assertThat("Field 'session_id' should not be empty!", sessionId.toString(), not(isEmptyString()));
+        }
     }
 }

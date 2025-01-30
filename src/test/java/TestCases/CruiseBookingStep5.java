@@ -13,6 +13,7 @@ import java.util.Random;
 
 import static TestCases.CruiseBookingStep4.extractCruiseBookingDetails;
 import static io.restassured.RestAssured.given;
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.assertTrue;
@@ -136,9 +137,25 @@ public class CruiseBookingStep5 {
 
         if (roomdetailsroomId != null && !roomdetailsroomId.toString().isEmpty()) {
             // Value is not null or empty
-            System.out.println("Field 'sessionId' has a valid value: " + roomdetailsroomId);
-            assertThat("Field 'sessionId' should have a valid value!",
-                    roomdetailsroomId.toString().trim(), not(isEmptyOrNullString()));
+            System.out.println("Field 'roomdetailsroomId' has a valid value: " + roomdetailsroomId);
+
+            // Check if the value is numeric
+            if (isNumeric(roomdetailsroomId.toString())) {
+                double roomIdValue = Double.parseDouble(roomdetailsroomId.toString());
+
+                // Check if the value is 0, 00, or negative
+                if (roomIdValue <= 0) {
+                    System.out.println("Field 'roomdetailsroomId' has a 0, 00, or negative value: " + roomIdValue);
+                    assertThat("Field 'roomdetailsroomId' should not be 0, 00, or negative!", roomIdValue, greaterThan(0.0));
+                } else {
+                    // Value is valid (not null, not empty, and positive)
+                    System.out.println("Field 'roomdetailsroomId' has a valid positive value: " + roomIdValue);
+                }
+            } else {
+                // Value is not numeric
+                System.out.println("Field 'roomdetailsroomId' is not a numeric value: " + roomdetailsroomId);
+                assertThat("Field 'roomdetailsroomId' should be a numeric value!", false);
+            }
         } else {
             // Value is null or empty
             System.out.println("Field 'roomdetailsroomId' is null or empty. Failing test case!");

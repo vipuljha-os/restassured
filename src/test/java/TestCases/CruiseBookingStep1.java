@@ -8,6 +8,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
 
+import static org.codehaus.groovy.runtime.StringGroovyMethods.isInteger;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -159,6 +163,21 @@ public class CruiseBookingStep1 {
             // Value is not null or empty
             System.out.println("Field 'availableItineriesDetailsItineraryID' has a valid value: " + availableItineriesDetailsItineraryID);
             assertThat("Field 'availableItineriesDetailsItineraryID' should have a valid value!", availableItineriesDetailsItineraryID.toString().trim(), not(isEmptyOrNullString()));
+
+            // Check if the value is a valid integer
+            if (isInteger(availableItineriesDetailsItineraryID.toString())) {
+                int itineraryId = Integer.parseInt(availableItineriesDetailsItineraryID.toString());
+
+                // Check if the value is 0 or negative
+                if (itineraryId <= 0) {
+                    System.out.println("Field 'availableItineriesDetailsItineraryID' has a 0 or negative value: " + itineraryId);
+                    assertThat("Field 'availableItineriesDetailsItineraryID' should not be 0 or negative!", itineraryId, greaterThan(0));
+                } else {
+                    // Value is valid (not null, not empty, and positive)
+                    System.out.println("Field 'availableItineriesDetailsItineraryID' has a valid positive integer value: " + itineraryId);
+                }
+            }
+
         } else {
             // Value is null or empty
             System.out.println("Field 'availableItineriesDetailsItineraryID' is null or empty. Failing test case!");
@@ -183,10 +202,27 @@ public class CruiseBookingStep1 {
         // Validate '@.available_itineries_details[1].itinerary_id' field
         Object availableItineriesDetailsItineraryId = jsonPath.get("available_itineries_details[1].itinerary_id");
 
-        if (availableItineriesDetailsItineraryId != null && !availableItineriesDetailsOffers.toString().isEmpty()) {
+        if (availableItineriesDetailsItineraryId != null && !availableItineriesDetailsItineraryId.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'availableItineriesDetailsItineraryId' has a valid value: " + availableItineriesDetailsItineraryId);
-            assertThat("Field 'availableItineriesDetailsItineraryId' should have a valid value!", availableItineriesDetailsItineraryId.toString().trim(), not(isEmptyOrNullString()));
+
+            // Check if the value is a valid integer
+            if (isInteger(availableItineriesDetailsItineraryId.toString())) {
+                int itineraryId = Integer.parseInt(availableItineriesDetailsItineraryId.toString());
+
+                // Check if the value is 0 or negative
+                if (itineraryId <= 0) {
+                    System.out.println("Field 'availableItineriesDetailsItineraryId' has a 0 or negative value: " + itineraryId);
+                    assertThat("Field 'availableItineriesDetailsItineraryId' should not be 0 or negative!", itineraryId, greaterThan(0));
+                } else {
+                    // Value is valid (not null, not empty, and positive)
+                    System.out.println("Field 'availableItineriesDetailsItineraryId' has a valid positive integer value: " + itineraryId);
+                }
+            } else {
+                // Value is not a valid integer
+                System.out.println("Field 'availableItineriesDetailsItineraryId' is not a valid integer: " + availableItineriesDetailsItineraryId);
+                assertThat("Field 'availableItineriesDetailsItineraryId' should be a valid integer!", false);
+            }
         } else {
             // Value is null or empty
             System.out.println("Field 'availableItineriesDetailsItineraryId' is null or empty. Failing test case!");

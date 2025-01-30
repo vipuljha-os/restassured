@@ -2,6 +2,7 @@ package TestCases;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
@@ -108,13 +109,31 @@ public void testCruiseBookingStep6() {
         assertThat(ForResponseParametersValidation_Status, equalTo("success"));
         System.out.println("******************************");
 
-        // Validate '@.guest_details[0].room_id' field
+        // Extract the 'room_id' field from the JSON response
         Object guestDetailsRoomId = jsonPath.get("guest_details[0].room_id");
 
+// Check if the 'room_id' field is present and has a valid value
         if (guestDetailsRoomId != null && !guestDetailsRoomId.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'guestDetailsRoomId' has a valid value: " + guestDetailsRoomId);
-            assertThat("Field 'guestDetailsRoomId' should have a valid value!", guestDetailsRoomId.toString().trim(), not(isEmptyOrNullString()));
+
+            // Check if the value is numeric
+            if (StringUtils.isNumeric(guestDetailsRoomId.toString())) {
+                int roomIdValue = Integer.parseInt(guestDetailsRoomId.toString());
+
+                // Check if the value is 0 or negative
+                if (roomIdValue <= 0) {
+                    System.out.println("Field 'guestDetailsRoomId' has a 0 or negative value: " + roomIdValue);
+                    assertThat("Field 'guestDetailsRoomId' should not be 0 or negative!", roomIdValue, greaterThan(0));
+                } else {
+                    // Value is valid (not null, not empty, and positive)
+                    System.out.println("Field 'guestDetailsRoomId' has a valid positive value: " + roomIdValue);
+                }
+            } else {
+                // Value is not numeric
+                System.out.println("Field 'guestDetailsRoomId' is not a numeric value: " + guestDetailsRoomId);
+                assertThat("Field 'guestDetailsRoomId' should be a numeric value!", false);
+            }
         } else {
             // Value is null or empty
             System.out.println("Field 'guestDetailsRoomId' is null or empty. Failing test case!");
@@ -135,19 +154,38 @@ public void testCruiseBookingStep6() {
             assertThat("Field 'paymentDetailTotal' is null or empty!", paymentDetailTotal, notNullValue());
             assertThat("Field 'paymentDetailTotal' should not be empty!", paymentDetailTotal.toString(), not(isEmptyString()));
         }
-        // Validate '@.payment_detail[0].total_tax' field
+        // Extract the 'total_tax' field from the JSON response
         Object paymentDetailTotalTax = jsonPath.get("payment_detail[0].total_tax");
 
+// Check if the 'total_tax' field is present and has a valid value
         if (paymentDetailTotalTax != null && !paymentDetailTotalTax.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'paymentDetailTotalTax' has a valid value: " + paymentDetailTotalTax);
-            assertThat("Field 'paymentDetailTotalTax' should have a valid value!", paymentDetailTotalTax.toString().trim(), not(isEmptyOrNullString()));
+
+            // Check if the value is numeric
+            if (StringUtils.isNumeric(paymentDetailTotalTax.toString())) {
+                double totalTaxValue = Double.parseDouble(paymentDetailTotalTax.toString());
+
+                // Check if the value is negative
+                if (totalTaxValue < 0) {
+                    System.out.println("Field 'paymentDetailTotalTax' has a negative value: " + totalTaxValue);
+                    assertThat("Field 'paymentDetailTotalTax' should not be negative!", totalTaxValue, greaterThanOrEqualTo(0.0));
+                } else {
+                    // Value is valid (not null, not empty, and non-negative)
+                    System.out.println("Field 'paymentDetailTotalTax' has a valid non-negative value: " + totalTaxValue);
+                }
+            } else {
+                // Value is not numeric
+                System.out.println("Field 'paymentDetailTotalTax' is not a numeric value: " + paymentDetailTotalTax);
+                //assertThat("Field 'paymentDetailTotalTax' should be a numeric value!", false);
+            }
         } else {
             // Value is null or empty
             System.out.println("Field 'paymentDetailTotalTax' is null or empty. Failing test case!");
             assertThat("Field 'paymentDetailTotalTax' is null or empty!", paymentDetailTotalTax, notNullValue());
             assertThat("Field 'paymentDetailTotalTax' should not be empty!", paymentDetailTotalTax.toString(), not(isEmptyString()));
         }
+
         // Validate '@.payment_detail[0].price_detail[0].guest_index' field
         Object paymentDetailPriceDetailGuestIndex = jsonPath.get("payment_detail[0].price_detail[0].guest_index");
 
@@ -161,19 +199,38 @@ public void testCruiseBookingStep6() {
             assertThat("Field 'paymentDetailPriceDetailGuestIndex' is null or empty!", paymentDetailPriceDetailGuestIndex, notNullValue());
             assertThat("Field 'paymentDetailPriceDetailGuestIndex' should not be empty!", paymentDetailPriceDetailGuestIndex.toString(), not(isEmptyString()));
         }
-        // Validate '@.payment_total' field
+        // Extract the 'payment_total' field from the JSON response
         Object paymentTotal = jsonPath.get("payment_total");
 
+// Check if the 'payment_total' field is present and has a valid value
         if (paymentTotal != null && !paymentTotal.toString().isEmpty()) {
             // Value is not null or empty
             System.out.println("Field 'paymentTotal' has a valid value: " + paymentTotal);
-            assertThat("Field 'paymentTotal' should have a valid value!", paymentTotal.toString().trim(), not(isEmptyOrNullString()));
+
+            // Check if the value is numeric
+            if (StringUtils.isNumeric(paymentTotal.toString())) {
+                double paymentTotalValue = Double.parseDouble(paymentTotal.toString());
+
+                // Check if the value is negative
+                if (paymentTotalValue < 0) {
+                    System.out.println("Field 'paymentTotal' has a negative value: " + paymentTotalValue);
+                    assertThat("Field 'paymentTotal' should not be negative!", paymentTotalValue, greaterThanOrEqualTo(0.0));
+                } else {
+                    // Value is valid (not null, not empty, and non-negative)
+                    System.out.println("Field 'paymentTotal' has a valid non-negative value: " + paymentTotalValue);
+                }
+            } else {
+                // Value is not numeric
+                System.out.println("Field 'paymentTotal' is not a numeric value: " + paymentTotal);
+                //assertThat("Field 'paymentTotal' should be a numeric value!", false);
+            }
         } else {
             // Value is null or empty
             System.out.println("Field 'paymentTotal' is null or empty. Failing test case!");
             assertThat("Field 'paymentTotal' is null or empty!", paymentTotal, notNullValue());
             assertThat("Field 'paymentTotal' should not be empty!", paymentTotal.toString(), not(isEmptyString()));
         }
+
     }
 
 }

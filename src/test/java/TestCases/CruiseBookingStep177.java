@@ -8,19 +8,16 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.testng.annotations.Test;
 
-import static org.codehaus.groovy.runtime.StringGroovyMethods.isInteger;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.time.LocalDate;
 import java.util.Random;
 
 import static io.restassured.RestAssured.given;
+import static org.codehaus.groovy.runtime.StringGroovyMethods.isInteger;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.assertTrue;
 
-public class CruiseBookingStep1 {
+public class CruiseBookingStep177 {
 
     private static final String URL = "https://bahamas.kapturecrm.com/get-cruise-itinerary-availability";
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
@@ -39,8 +36,11 @@ public class CruiseBookingStep1 {
     }
     public static String getRandomItinerary() {
         String[] itineraries = {
-                "2-Night Nassau Getaway\n",
-                "2-Night Bahamas"
+                "4-Night Key West & Bahamas",
+                "5-Night Nassau & Grand Bahama",
+                "6-Night Key West & Bahamas",
+                "7-Night Mexico, Roatan & Belize",
+                "10-Night Aruba, Curacao & Caribbean"
         };
         Random random = new Random();
         return itineraries[random.nextInt(itineraries.length)];
@@ -55,13 +55,13 @@ public class CruiseBookingStep1 {
         // To Get a random itinerary name
         String selectedItinerary = getRandomItinerary();
 
-        // Request body with dynamic year_month value
+
         // Request body with dynamic year_month value
         String requestBody = "{\n" +
                 "    \"itinerary_name\":\"" + selectedItinerary + "\",\n" +
                 "    \"year_month\":\"" + randomYearMonth + "\"\n" +
                 "}";
-        System.out.println("Request body step 1");
+        System.out.println("Request body step 177");
         System.out.println(requestBody);
         // API Request
         Response response = given().header("Content-Type", CONTENT_TYPE).header("Authorization", AUTHORIZATION_HEADER).body(requestBody).when().post(URL);

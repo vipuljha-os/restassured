@@ -12,10 +12,9 @@ import java.util.Random;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.isEmptyString;
 import static org.testng.Assert.assertTrue;
 
-public class CruiseBookingStep6 {
+public class CruiseBookingStep677 {
     private static final String URL = "https://bahamas.kapturecrm.com/get-cruise-booking-guest-booking-preview";
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
@@ -30,7 +29,7 @@ public void testCruiseBookingStep6() {
     Object result = VerifyCruiseBookingStep6();
 }
     public static Object VerifyCruiseBookingStep6() {
-        CruiseBookingStep5 cruiseBookingStep5 = new CruiseBookingStep5();
+        CruiseBookingStep577 cruiseBookingStep5 = new CruiseBookingStep577();
         // Get the response of Step 1 (assuming the response object is stored in CruiseBookingStep1.responseOfStep1)
         JSONObject response1 = cruiseBookingStep5.VerifyCruiseBookingStep5();
         System.out.println("***********");
@@ -65,11 +64,15 @@ public void testCruiseBookingStep6() {
         }
 
         // Request body
-        //String requestBody = "{\n" + "    \"sailing_date\": \"" + sailingDate + "\",\n" + "    \"sailing_type\": \"" + sailing_type + "\",\n" + "    \"cruise_id\": \"61\",\n" + "    \"category_id\": \"" + categoryId + "\",\n" + "    \"guest_details\": [\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Qwerty\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        },\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Pinto\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        }\n" + "    ],\n" + "    \"total_room\": 1\n" + "}";
+        //String requestBody = "{\n" + "    \"sailing_date\": \"" + sailingDate + "\",\n" + "    \"sailing_type\": \"" + sailing_type + "\",\n" + "    \"cruise_id\": \"77\",\n" + "    \"category_id\": \"" + categoryId + "\",\n" + "    \"guest_details\": [\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Qwerty\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        },\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Pinto\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        }\n" + "    ],\n" + "    \"total_room\": 1\n" + "}";
+          //String requestBody = "{\n" + "    \"sailing_date\": \"" + sailingDate + "\",\n" + "    \"sailing_type\": \"" + sailing_type + "\",\n" + "    \"cruise_id\": \"77\",\n" + "    \"category_id\": \"" + categoryId + "\",\n" + "    \"guest_details\": [\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Qwerty\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        },\n" + "        {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/1990\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Pinto\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        }\n" + " {\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/2018\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Qwerty\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        },\n"+"{\n" + "            \"phone\": 9876543446,\n" + "            \"dob\": \"11/01/2024\",\n" + "            \"last_name\": \"Albert\",\n" + "            \"room_id\": \"" + room_id + "\",\n" + "            \"title\": \"Mr.\",\n" + "            \"city\": \"NYC\",\n" + "            \"country\": \"USA\",\n" + "            \"nationality\": \"USAA\",\n" + "            \"state\": \"Florida\",\n" + "            \"passport_no\": \"A298765\",\n" + "            \"passport_expiry_date\": \"04/02/2030\",\n" + "            \"first_name\": \"Qwerty\",\n" + "            \"address\": \"1st Cross dummy details, 37/a\",\n" + "            \"email\": \"yash.tembhare@kapturecrm.com\",\n" + "            \"room_no\": \"4037\",\n" + "            \"gender\": \"Male\"\n" + "        },\n"   ],\n" + "    \"total_room\": 1\n" + "}";
+
+
+
         String requestBody="{\n" +
                 "    \"sailing_date\": \"" + sailingDate + "\",\n" +
                 "    \"sailing_type\":\"" + sailing_type + "\",\n" +
-                "    \"cruise_id\": \"61\",\n" +
+                "    \"cruise_id\": \"77\",\n" +
                 "    \"category_id\": \"" + categoryId + "\",\n"  +
                 "    \"guest_details\": [\n" +
                 "        {\n" +
@@ -164,6 +167,7 @@ public void testCruiseBookingStep6() {
                 "    ],\n" +
                 "    \"total_room\": 1\n" +
                 "}\n";
+
         System.out.println(requestBody);
         // API Request
         Response response = given().header("Content-Type", CONTENT_TYPE).header("Authorization", AUTHORIZATION_HEADER).body(requestBody).when().post(URL);

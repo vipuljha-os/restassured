@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.testng.Assert.assertTrue;
 
-public class CruiseBookingStep5 {
+public class CruiseBookingStep577 {
     private static final String URL = "https://bahamas.kapturecrm.com/search-cruise-room-availability-block";
     private static final String AUTHORIZATION_HEADER = "Basic YmFoYW1hc3BhcmFkaXNlOkFXNTREMk9RRzBGOFo4";
     private static final String CONTENT_TYPE = "application/json";
@@ -35,7 +35,7 @@ public class CruiseBookingStep5 {
     }
 
     public static JSONObject VerifyCruiseBookingStep5() {
-        CruiseBookingStep4 cruiseBookingStep4 = new CruiseBookingStep4();
+        CruiseBookingStep477 cruiseBookingStep4 = new CruiseBookingStep477();
         JSONObject response1 = cruiseBookingStep4.VerifyCruiseBookingStep4();
 
         // Extract required booking details
@@ -54,7 +54,7 @@ public class CruiseBookingStep5 {
 
         // Prepare the request body
         String requestBody = "{\n" +
-                "    \"cruise_id\":\"61\",\n" +
+                "    \"cruise_id\":\"77\",\n" +
                 "    \"total_room\": \"1\",\n" +
                 "    \"sailing_date\": \"" + sailingDate + "\",\n" +
                 "    \"sailing_type\": \"" + sailingType + "\",\n" +

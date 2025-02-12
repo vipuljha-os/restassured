@@ -4,22 +4,29 @@
     </listeners>
     <test name="KaptureBackend">
         <classes>
-            <class name="TestCases.ZeptoAddTicketTest" />
-            <class name="TestCases.ZeptoGetTicketDetailsTest" />
-            <class name="TestCases.ZeptoGetTicketsCreatedByMeTest" />
-            <class name="TestCases.ZeptoGetAssignedToMeTest" />
-            <class name="TestCases.ZeptoAllCompleteTicketsTest" />
-            <class name="TestCases.ZeptoGetAllPendingTicketsTest" />
-            <class name="TestCases.ZeptoUnassignedTicketsTest" />
-            <class name="TestCases.ZeptoTicketDisposeTest" />
-            <class name="TestCases.ZeptoAllJunkTicketsTest" />
-            <class name="TestCases.ZeptoCompletedByMeTest" />
-            <class name="TestCases.ZeptoJunkTicketTest" />
-            <class name="TestCases.ZeptoGetMoreTicketsTest" />
-            <class name="TestCases.ZeptoGetHistoryDetailsTest" />
-            <class name="TestCases.ZeptoGetOrderListTest" />
-            <class name="TestCases.ZeptoGetOrderDetailTest" />
-            <class name="TestCases.ZeptoGetOtherOrderDetailTest" />
+            <class name="TestCases.GoldenRamaAddTicketTest" />
+            <class name="TestCases.GoldenRamaAssignToTicketTest" />
+            <class name="TestCases.GoldenRamaSearchTicketTest" />
+            <class name="TestCases.GoldenRamaAddAttachmentTicketTest" />
+            <class name="TestCases.GoldenRamaAddNotesToTicketTest" />
+            <class name="TestCases.GoldenRamaGetNotesDetailTest" />
+            <class name="TestCases.GoldenRamaGetTicketAttachmentTest" />
+            <class name="TestCases.GoldenRamaGetTicketDetailsTest" />
+            <class name="TestCases.GoldenRamaGetTicketAdditionalDetailsTest" />
+            <class name="TestCases.GoldenRamaGetTicketHistoryTest" />
+            <class name="TestCases.GoldenRamaDisposeTicketTest" />
+            <class name="TestCases.GoldenRamaReopenTicketTest" />
+            <class name="TestCases.GoldenRamaJunkTicketTest" />
+            <class name="TestCases.GoldenRamaCannedResponseTicketTest" />
+            <class name="TestCases.GoldenRamaCompletedByMeTicketsTest" />
+            <class name="TestCases.GoldenRamaCompletedByTeamTicketsTest" />
+            <class name="TestCases.GoldenRamaCreatedByMeTicketsTest" />
+            <class name="TestCases.GoldenRamaGetAllCompleteTicketsTest" />
+            <class name="TestCases.GoldenRamaGetAllJunkTicketsTest" />
+            <class name="TestCases.GoldenRamaGetAllPendingTicketsTest" />
+            <class name="TestCases.GoldenRamaGetUnassignedTicketsTest" />
+            <class name="TestCases.GoldenRamaPendingByTeamTicketsTest" />
+            <class name="TestCases.GoldenRamaGetAssignedToMeTicketsTest" />
         </classes>
     </test>
 </suite>

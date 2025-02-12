@@ -26,11 +26,5 @@ public class FileLibOne {
         }
     }
 
-    public static String getPropertyDataZepto(String key) throws IOException {
-        FileInputStream fis = new FileInputStream("C:\\backendtests\\backendtests\\src\\test\\java\\FileUtility\\ToStoreTicketId");
-        Properties p = new Properties();
-        p.load(fis);
-        return p.getProperty(key);
-    }
 }
 

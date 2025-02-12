@@ -71,6 +71,5 @@ public class ZeptoAddTicketTest extends ZeptoLogin {
         System.out.println(ForResponseParametersValidation);
         System.out.println("Ticket has been added successfully with Ticket_Id : " + ticketId);
         FileLibOne.writeDataIntoPropertyFile(ticketId, taskId);
-
     }
 }

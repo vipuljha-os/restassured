@@ -29,17 +29,24 @@ pipelines:
               FAILURES=$(echo $TEST_RESULTS | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*')
               ERRORS=$(echo $TEST_RESULTS | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
               SKIPPED=$(echo $TEST_RESULTS | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*')
-              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5)
-              FAILED_TESTS=$(echo "$FAILED_TESTS" | tr '\n' ', ' | sed 's/, $//')
+              # Extract failed test names
+              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml)
               if [ -z "$FAILED_TESTS" ]; then
                 FAILED_TESTS="None"
               fi
+              # Extract full failure logs
+              FAILED_LOGS=$(awk '/<failure/,/<\/failure>/ {print}' target/surefire-reports/*.xml | head -20)
+              if [ -z "$FAILED_LOGS" ]; then
+                FAILED_LOGS="No detailed failure logs available."
+              fi
+              # Format the message for Google Chat
               MESSAGE="🚀 *API Test Suite Completed for Client MVAS* 🚀\n\n
               🧪 *Total Tests:* $TESTS\n
               ❌ *Failures:* $FAILURES\n
               ⚠️ *Errors:* $ERRORS\n
               ⏭️ *Skipped:* $SKIPPED\n
               🔴 *Failed Tests:* $FAILED_TESTS\n
-              🛳️ *Extracted Testing Itinerary Name From Log:* $ITINERARY_NAME"
+              🛳️ *Extracted Itinerary Name:* $ITINERARY_NAME\n\n
+              📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
               curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
-            - set -e
+               - set -e

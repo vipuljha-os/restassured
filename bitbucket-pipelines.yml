@@ -40,13 +40,13 @@ pipelines:
                 FAILED_LOGS="No detailed failure logs available."
               fi
               # Format the message for Google Chat
-              MESSAGE="🚀 *API Test Suite Completed for Client MVAS* 🚀\n\n
+              MESSAGE="🚀 *API Test Suite Completed for Client MVAS* 🚀\n
               🧪 *Total Tests:* $TESTS\n
               ❌ *Failures:* $FAILURES\n
               ⚠️ *Errors:* $ERRORS\n
               ⏭️ *Skipped:* $SKIPPED\n
               🔴 *Failed Tests:* $FAILED_TESTS\n
-              🛳️ *Extracted Itinerary Name:* $ITINERARY_NAME\n\n
+              🛳️ *Extracted Itinerary Name:* $ITINERARY_NAME\n
               📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
               curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
                - set -e

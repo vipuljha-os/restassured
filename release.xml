@@ -11,6 +11,13 @@
             <class name="TestCases.CruiseBookingStep5" />
             <class name="TestCases.CruiseBookingStep6" />
             <class name="TestCases.CruiseBookingStep7" />
+            <class name="TestCases.CruiseBookingStep177" />
+            <class name="TestCases.CruiseBookingStep277" />
+            <class name="TestCases.CruiseBookingStep377" />
+            <class name="TestCases.CruiseBookingStep477" />
+            <class name="TestCases.CruiseBookingStep577" />
+            <class name="TestCases.CruiseBookingStep677" />
+            <class name="TestCases.CruiseBookingStep777" />
         </classes>
     </test>
 </suite>

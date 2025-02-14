@@ -12,6 +12,8 @@ import static org.codehaus.groovy.runtime.StringGroovyMethods.isInteger;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -36,6 +38,20 @@ public class CruiseBookingStep1 {
     public void testCruiseBookingStep1() {
         // Call the helper method to execute the API logic
         JSONObject result = verifyCruiseBookingStep1Test();
+
+        if (result.containsKey("itinerary_name")) {
+            String itineraryName = result.get("itinerary_name").toString();
+            System.out.println("BITBUCKET_LOG: Extracted Itinerary Name: " + itineraryName);
+
+            // Save the itinerary name to a file
+            try (FileWriter writer = new FileWriter("itinerary_name.txt")) {
+                writer.write(itineraryName);
+            } catch (IOException e) {
+                System.err.println("Error writing itinerary name to file: " + e.getMessage());
+            }
+        } else {
+            System.out.println("BITBUCKET_LOG: itinerary_name not found in the response.");
+        }
     }
     public static String getRandomItinerary() {
         String[] itineraries = {

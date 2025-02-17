@@ -27,7 +27,7 @@ pipelines:
 
               # Format the message for Google Chat
               MESSAGE="{
-                \"text\": \"🚀 *API Test Suite Completed for Major Clients* 🚀\\n
+                \"text\": \"🚀 *API Test Suite Completed for Zepto Client* 🚀\\n
                 🧪 *Total Tests:* $TESTS\\n
                 ❌ *Failures:* $FAILURES\\n
                 ⚠️ *Errors:* $ERRORS\\n

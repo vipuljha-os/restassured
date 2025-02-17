@@ -2,27 +2,49 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build, Test, Rerun Failed Tests, and Send Results to Google Chat
+          name: Build, Echo Test Script Paths, Run Tests, Rerun Failed Tests, and Send Results to Google Chat
           image: maven:3.8.5-openjdk-17
           caches:
             - maven
           script:
             - apt-get update && apt-get install -y curl
             - set +e
+            # Echo the path of the test scripts
+            - echo "Test scripts path:"
+            - find src/test/java -name "*.java" # More specific to test cases
+
             # Run tests and rerun failing tests once
             - mvn clean test -Dsurefire.rerunFailingTestsCount=1
+
+            # Extract test results
             - |
-              TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
+              TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1 || echo "")
               TESTS=$(echo $TEST_RESULTS | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')
               FAILURES=$(echo $TEST_RESULTS | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*')
               ERRORS=$(echo $TEST_RESULTS | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
               SKIPPED=$(echo $TEST_RESULTS | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*')
-              # Extract the names of the failed test cases, limiting to the first 5
-              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5)
+
+              # Set default values if empty
+              TESTS=${TESTS:-0}
+              FAILURES=${FAILURES:-0}
+              ERRORS=${ERRORS:-0}
+              SKIPPED=${SKIPPED:-0}
+
+              # Extract failed test names (limit to 5)
+              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5 || echo "None")
               FAILED_TESTS=$(echo "$FAILED_TESTS" | tr '\n' ', ' | sed 's/, $//')
-              if [ -z "$FAILED_TESTS" ]; then
-                FAILED_TESTS="None"
-              fi
-              MESSAGE="🧪 *Total Tests:* $TESTS\n❌ *Failures:* $FAILURES\n⚠️ *Errors:* $ERRORS\n⏭️ *Skipped:* $SKIPPED\n🔴 *Failed Tests:* $FAILED_TESTS"
-              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAbn1eoMU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=p12jwlFrGkJTwXVrlBZ01SvDHXf9ggXQrz_pkPUtBoM"
+              
+              # Extract full failure logs (first 20 lines)
+              FAILED_LOGS=$(awk '/<failure/,/<\/failure>/ {print}' target/surefire-reports/*.xml | head -20 || echo "No detailed failure logs available.")
+              
+              # Format the message for Google Chat
+              MESSAGE="🚀 *API Test Suite Completed for Client MVAS* 🚀\n\n"
+              MESSAGE+="🧪 *Total Tests:* $TESTS\n"
+              MESSAGE+="❌ *Failures:* $FAILURES\n"
+              MESSAGE+="⚠️ *Errors:* $ERRORS\n"
+              MESSAGE+="⏭️ *Skipped:* $SKIPPED\n"
+              MESSAGE+="🔴 *Failed Tests:* $FAILED_TESTS\n\n"
+              MESSAGE+="📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
+
+              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
             - set -e

@@ -20,21 +20,42 @@ pipelines:
 
               # Extract the names of the failed test cases, limiting to the first 5
               FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5)
-              FAILED_TESTS=$(echo "$FAILED_TESTS" | tr '\n' '\n- ' | sed 's/^/- /')
+
+              # Ensure FAILED_TESTS is properly formatted
               if [ -z "$FAILED_TESTS" ]; then
-                FAILED_TESTS="- None"
+                FAILED_TESTS="None"
+              else
+                FAILED_TESTS=$(echo "$FAILED_TESTS" | awk '{print "- " $0}' | tr '\n' '\\n')
               fi
 
-              # Format the message for Google Chat
+              # Format the message using Google Chat Card (Attachment)
               MESSAGE="{
-                \"text\": \"🚀 *API Test Suite Completed for Major Clients* 🚀\\n
-                🧪 *Total Tests:* $TESTS\\n
-                ❌ *Failures:* $FAILURES\\n
-                ⚠️ *Errors:* $ERRORS\\n
-                ⏭️ *Skipped:* $SKIPPED\\n
-                🔴 *Failed Tests:*\\n$FAILED_TESTS\"
+                \"cards\": [{
+                  \"header\": {
+                    \"title\": \"🚀 API Test Suite Completed for Major Clients 🚀\",
+                    \"subtitle\": \"Test Results Summary\",
+                    \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_Chat_icon_%282020%29.svg/1200px-Google_Chat_icon_%282020%29.svg.png\",
+                    \"imageStyle\": \"AVATAR\"
+                  },
+                  \"sections\": [
+                    {
+                      \"widgets\": [
+                        { \"keyValue\": { \"topLabel\": \"🧪 Total Tests\", \"content\": \"$TESTS\" } },
+                        { \"keyValue\": { \"topLabel\": \"❌ Failures\", \"content\": \"$FAILURES\", \"contentMultiline\": true } },
+                        { \"keyValue\": { \"topLabel\": \"⚠️ Errors\", \"content\": \"$ERRORS\" } },
+                        { \"keyValue\": { \"topLabel\": \"⏭️ Skipped\", \"content\": \"$SKIPPED\" } }
+                      ]
+                    },
+                    {
+                      \"header\": \"🔴 Failed Tests\",
+                      \"widgets\": [
+                        { \"textParagraph\": { \"text\": \"$FAILED_TESTS\" } }
+                      ]
+                    }
+                  ]
+                }]
               }"
 
               # Send the message to Google Chat
-              curl -X POST -H 'Content-Type: application/json' -d "$MESSAGE" "https://chat.googleapis.com/v1/spaces/AAAAbn1eoMU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=p12jwlFrGkJTwXVrlBZ01SvDHXf9ggXQrz_pkPUtBoM"
+              curl -X POST -H 'Content-Type: application/json' -d "$MESSAGE" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
             - set -e

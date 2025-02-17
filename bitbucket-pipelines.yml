@@ -36,5 +36,5 @@ pipelines:
               }"
 
               # Send the message to Google Chat
-              curl -X POST -H 'Content-Type: application/json' -d "$MESSAGE" "https://chat.googleapis.com/v1/spaces/AAAAbn1eoMU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=p12jwlFrGkJTwXVrlBZ01SvDHXf9ggXQrz_pkPUtBoM"
+              curl -X POST -H 'Content-Type: application/json' -d "$MESSAGE" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
             - set -e

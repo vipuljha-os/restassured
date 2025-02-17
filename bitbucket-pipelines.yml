@@ -11,8 +11,6 @@ pipelines:
             - set +e
             # Run tests and rerun failing tests once
             - mvn clean test -Dsurefire.rerunFailingTestsCount=1
-
-            # Extract test results
             - |
               TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
               TESTS=$(echo $TEST_RESULTS | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')
@@ -20,26 +18,23 @@ pipelines:
               ERRORS=$(echo $TEST_RESULTS | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
               SKIPPED=$(echo $TEST_RESULTS | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*')
 
-              # Extract failed test names
-              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml)
+              # Extract the names of the failed test cases, limiting to the first 5
+              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5)
+              FAILED_TESTS=$(echo "$FAILED_TESTS" | tr '\n' '\n- ' | sed 's/^/- /')
               if [ -z "$FAILED_TESTS" ]; then
-                FAILED_TESTS="None"
-              fi
-
-              # Extract detailed failure logs (first 20 lines)
-              FAILED_LOGS=$(awk '/<failure/,/<\/failure>/ {print}' target/surefire-reports/*.xml | head -20)
-              if [ -z "$FAILED_LOGS" ]; then
-                FAILED_LOGS="No detailed failure logs available."
+                FAILED_TESTS="- None"
               fi
 
               # Format the message for Google Chat
-              MESSAGE="🚀 *API Test Suite Completed for Client PHILIPS* 🚀\n
-              🧪 *Total Tests:* $TESTS\n
-              ❌ *Failures:* $FAILURES\n
-              ⚠️ *Errors:* $ERRORS\n
-              ⏭️ *Skipped:* $SKIPPED\n
-              🔴 *Failed Tests:* $FAILED_TESTS\n
-              📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
+              MESSAGE="{
+                \"text\": \"🚀 *API Test Suite Completed for Major Clients* 🚀\\n
+                🧪 *Total Tests:* $TESTS\\n
+                ❌ *Failures:* $FAILURES\\n
+                ⚠️ *Errors:* $ERRORS\\n
+                ⏭️ *Skipped:* $SKIPPED\\n
+                🔴 *Failed Tests:*\\n$FAILED_TESTS\"
+              }"
 
-              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAbn1eoMU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=p12jwlFrGkJTwXVrlBZ01SvDHXf9ggXQrz_pkPUtBoM"
+              # Send the message to Google Chat
+              curl -X POST -H 'Content-Type: application/json' -d "$MESSAGE" "https://chat.googleapis.com/v1/spaces/AAAAbn1eoMU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=p12jwlFrGkJTwXVrlBZ01SvDHXf9ggXQrz_pkPUtBoM"
             - set -e

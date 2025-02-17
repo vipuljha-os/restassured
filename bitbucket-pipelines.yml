@@ -32,7 +32,6 @@ pipelines:
                 ❌ *Failures:* $FAILURES\\n
                 ⚠️ *Errors:* $ERRORS\\n
                 ⏭️ *Skipped:* $SKIPPED\\n
-                🔴 *Failed Tests:*\\n$FAILED_TESTS\"
               }"
 
               # Send the message to Google Chat

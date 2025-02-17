@@ -14,14 +14,24 @@ pipelines:
             - find $(pwd) -name "*.java" # This will list all Java test files
             # Run tests using release.xml and rerun failing tests once
             - mvn clean test
-            # Extract itinerary_name from the file
+
+            # Extract itinerary names from files
             - |
               if [ -f itinerary_name.txt ]; then 
-                ITINERARY_NAME=$(cat itinerary_name.txt) 
+                ITINERARY_NAME_PARADISE=$(cat itinerary_name.txt) 
               else 
-                ITINERARY_NAME="Not found" 
+                ITINERARY_NAME_PARADISE="Not found" 
               fi
-              echo "BITBUCKET_LOG: Extracted Itinerary Name: $ITINERARY_NAME"
+              echo "BITBUCKET_LOG: Extracted Itinerary Name for Paradise: $ITINERARY_NAME_PARADISE"
+
+            - |
+              if [ -f itinerary_name_for_CruiseID_77.txt ]; then 
+                ITINERARY_NAME_ISLANDER=$(cat itinerary_name_for_CruiseID_77.txt) 
+              else 
+                ITINERARY_NAME_ISLANDER="Not found" 
+              fi
+              echo "BITBUCKET_LOG: Extracted Itinerary Name for Islander: $ITINERARY_NAME_ISLANDER"
+
             # Extract test results
             - |
               TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
@@ -29,16 +39,19 @@ pipelines:
               FAILURES=$(echo $TEST_RESULTS | grep -o 'failures="[0-9]*"' | grep -o '[0-9]*')
               ERRORS=$(echo $TEST_RESULTS | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
               SKIPPED=$(echo $TEST_RESULTS | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*')
+
               # Extract failed test names
               FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml)
               if [ -z "$FAILED_TESTS" ]; then
                 FAILED_TESTS="None"
               fi
+
               # Extract full failure logs
               FAILED_LOGS=$(awk '/<failure/,/<\/failure>/ {print}' target/surefire-reports/*.xml | head -20)
               if [ -z "$FAILED_LOGS" ]; then
                 FAILED_LOGS="No detailed failure logs available."
               fi
+
               # Format the message for Google Chat
               MESSAGE="🚀 *API Test Suite Completed for Client MVAS* 🚀\n
               🧪 *Total Tests:* $TESTS\n
@@ -46,7 +59,8 @@ pipelines:
               ⚠️ *Errors:* $ERRORS\n
               ⏭️ *Skipped:* $SKIPPED\n
               🔴 *Failed Tests:* $FAILED_TESTS\n
-              🛳️ *Extracted Itinerary Name:* $ITINERARY_NAME\n
+              🛳️ *Extracted Itinerary Name For Paradise:* $ITINERARY_NAME_PARADISE\n
+              🛳️ *Extracted Itinerary Name For Islander:* $ITINERARY_NAME_ISLANDER\n
               📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
               curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
                - set -e

@@ -20,40 +20,18 @@ pipelines:
 
               # Extract the names of the failed test cases, limiting to the first 5
               FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5)
-
-              # Ensure FAILED_TESTS is properly formatted
+              FAILED_TESTS=$(echo "$FAILED_TESTS" | tr '\n' '\n- ' | sed 's/^/- /')
               if [ -z "$FAILED_TESTS" ]; then
-                FAILED_TESTS="None"
-              else
-                FAILED_TESTS=$(echo "$FAILED_TESTS" | awk '{print "- " $0}' | tr '\n' '\\n')
+                FAILED_TESTS="- None"
               fi
 
-              # Format the message using Google Chat Card (Attachment)
+              # Format the message for Google Chat
               MESSAGE="{
-                \"cards\": [{
-                  \"header\": {
-                    \"title\": \"🚀 API Test Suite Completed for Major Clients 🚀\",
-                    \"subtitle\": \"Test Results Summary\",
-                    \"imageUrl\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_Chat_icon_%282020%29.svg/1200px-Google_Chat_icon_%282020%29.svg.png\",
-                    \"imageStyle\": \"AVATAR\"
-                  },
-                  \"sections\": [
-                    {
-                      \"widgets\": [
-                        { \"keyValue\": { \"topLabel\": \"🧪 Total Tests\", \"content\": \"$TESTS\" } },
-                        { \"keyValue\": { \"topLabel\": \"❌ Failures\", \"content\": \"$FAILURES\", \"contentMultiline\": true } },
-                        { \"keyValue\": { \"topLabel\": \"⚠️ Errors\", \"content\": \"$ERRORS\" } },
-                        { \"keyValue\": { \"topLabel\": \"⏭️ Skipped\", \"content\": \"$SKIPPED\" } }
-                      ]
-                    },
-                    {
-                      \"header\": \"🔴 Failed Tests\",
-                      \"widgets\": [
-                        { \"textParagraph\": { \"text\": \"$FAILED_TESTS\" } }
-                      ]
-                    }
-                  ]
-                }]
+                \"text\": \"🚀 *API Test Suite Completed for Major Clients* 🚀\\n
+                🧪 *Total Tests:* $TESTS\\n
+                ❌ *Failures:* $FAILURES\\n
+                ⚠️ *Errors:* $ERRORS\\n
+                ⏭️ *Skipped:* $SKIPPED\\n
               }"
 
               # Send the message to Google Chat

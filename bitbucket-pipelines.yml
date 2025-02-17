@@ -25,6 +25,21 @@ pipelines:
               else
                 FAILED_TESTS="$FAILED_TESTS"
               fi
-              MESSAGE="Pipeline run completed. Final Test Results: Tests: $TESTS, Failures: $FAILURES, Errors: $ERRORS, Skipped: $SKIPPED. Failed Tests: $FAILED_TESTS"
+
+              # Format the message for Google Chat using '|' to preserve newlines
+              MESSAGE: |
+                🚀 *API Test Suite Completed for major Clients* 🚀
+
+                🧪 *Total Tests:* $TESTS
+
+                ❌ *Failures:* $FAILURES
+
+                ⚠️ *Errors:* $ERRORS
+
+                ⏭️ *Skipped:* $SKIPPED
+
+                🔴 *Failed Tests:* $FAILED_TESTS
+
+              # Send the formatted message to Google Chat
               curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAbn1eoMU/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=p12jwlFrGkJTwXVrlBZ01SvDHXf9ggXQrz_pkPUtBoM"
             - set -e

@@ -29,12 +29,22 @@ pipelines:
                 FAILED_TESTS="None"
               fi
 
+              # Extract full failure logs (first 20 lines)
+              FAILED_LOGS=$(awk '/<failure/,/<\/failure>/ {print}' target/surefire-reports/*.xml | head -20)
+              if [ -z "$FAILED_LOGS" ]; then
+                FAILED_LOGS="No detailed failure logs available."
+              fi
+
               # Format the message for Google Chat
               MESSAGE="🚀 *API Test Suite Completed for Major Clients* 🚀\n
               🧪 *Total Tests:* $TESTS\n
               ❌ *Failures:* $FAILURES\n
               ⚠️ *Errors:* $ERRORS\n
               ⏭️ *Skipped:* $SKIPPED\n
-              🔴 *Failed Tests:* $FAILED_TESTS"
-              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=$GOOGLE_CHAT_KEY&token=$GOOGLE_CHAT_TOKEN"
+              🔴 *Failed Tests:* $FAILED_TESTS\n
+              📝 *Failure Logs:* $FAILED_LOGS"
+
+              # Send the message to Google Chat
+              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAR5VDOco/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=-fk6nsvjYX6G8MtGvvuUS0Jwqeuc7448dFweg27eUZk"
+
             - set -e

@@ -15,7 +15,7 @@ public class GoldenRamaLogin {
     //@BeforeClass
     @Test
     public void GoldenRamalogin() {
-        String username = "goldenrama";
+        String username = "Test@kaptue.cx";
         String password = "Test@1234";
 
         Response response = RestAssured.given()

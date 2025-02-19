@@ -22,7 +22,7 @@ public class GoldenRamaAddAttachmentTicketTest extends GoldenRamaLogin {
 
          Response response = RestAssured.given()
                  .redirects().follow(false)
-                 .multiPart("attach_1", new File("C:/Users/mansi.amrutwar/Downloads/download_(4) - Copy.jfif"))
+                 .multiPart("attach_1", new File("/opt/atlassian/pipelines/agent/build/src/test/java/FileUtility/jpeg image.jpg"))
                  .formParam("task_id",taskId)
                  .formParam("response_type","json")
                  .formParam("total_attachment","1")

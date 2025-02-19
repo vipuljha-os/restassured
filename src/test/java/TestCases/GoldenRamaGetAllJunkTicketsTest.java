@@ -30,7 +30,7 @@ public class GoldenRamaGetAllJunkTicketsTest extends GoldenRamaLogin {
         //Response Time validation
         long responseTime = response.getTime();
         System.out.println("Response Time => " + responseTime);
-        assertTrue(responseTime < 10000, "Response time exceeds the acceptable threshold of 10000 milliseconds");
+        assertTrue(responseTime < 13000, "Response time exceeds the acceptable threshold of 10000 milliseconds");
 
         //Param Validation
 

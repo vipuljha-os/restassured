@@ -32,7 +32,7 @@ public class ZeptoLogin {
         FileLib.writeDataIntoPropertyFile(String.valueOf(cookies));
 
         try {
-            Thread.sleep(300); // Add a wait time of 300 milliseconds after executing login method
+            Thread.sleep(500); // Add a wait time of 300 milliseconds after executing login method
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

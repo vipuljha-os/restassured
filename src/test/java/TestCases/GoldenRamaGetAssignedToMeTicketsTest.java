@@ -12,7 +12,7 @@ import static org.testng.Assert.assertTrue;
 
 public class GoldenRamaGetAssignedToMeTicketsTest extends GoldenRamaLogin {
     @Test
-    public void getAssignedToMeTickets(){
+    public void getAssignedToMeTicketsGoldenRama(){
         Response response = given()
                 .cookies(cookies)
                 .formParam("type","5")

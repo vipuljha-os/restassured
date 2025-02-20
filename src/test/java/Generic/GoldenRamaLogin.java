@@ -4,7 +4,6 @@ import FileUtility.FileLib;
 import io.restassured.RestAssured;
 import io.restassured.http.Cookies;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static Generic.GoldenRamaRoutes.GoldenRamalogin;
@@ -29,7 +28,7 @@ public class GoldenRamaLogin {
             System.out.println("*****************************");
             System.out.println(cookies);
             System.out.println("Login method is executed");
-            FileLib.writeDataIntoPropertyFile(String.valueOf(cookies));
+            FileLib.writeDataIntoPropertyFileGoldenRama(String.valueOf(cookies));
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("An error occurred while processing cookies or writing to the property file.");

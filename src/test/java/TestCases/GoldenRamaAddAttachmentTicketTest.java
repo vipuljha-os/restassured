@@ -16,13 +16,13 @@ import static org.testng.Assert.assertTrue;
 
 public class GoldenRamaAddAttachmentTicketTest extends GoldenRamaLogin {
      @Test
-    public void addAttachment() throws IOException {
-         String taskId = FileLibOne.getPropertyData("taskId");
-         String ticketId = FileLibOne.getPropertyData("ticketId");
+    public void addAttachmentGoldenRama() throws IOException {
+         String taskId = FileLibOne.getPropertyDataGoldenRama("taskIdGoldenRama");
+         String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
 
          Response response = RestAssured.given()
                  .redirects().follow(false)
-                 .multiPart("attach_1", new File("/opt/atlassian/pipelines/agent/build/src/test/java/FileUtility/jpeg image.jpg"))
+                 .multiPart("attach_1", new File("/opt/atlassian/pipelines/agent/build/src/test/java/FileUtility/attach.jpeg"))
                  .formParam("task_id",taskId)
                  .formParam("response_type","json")
                  .formParam("total_attachment","1")

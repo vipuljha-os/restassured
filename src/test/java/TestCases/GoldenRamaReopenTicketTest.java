@@ -15,9 +15,9 @@ import static org.testng.Assert.assertTrue;
 
 public class GoldenRamaReopenTicketTest extends GoldenRamaLogin {
     @Test
-    public void reopenTicket() throws IOException{
-        String ticketId = FileLibOne.getPropertyData("ticketId");
-        String taskId = FileLibOne.getPropertyData("taskId");
+    public void reopenTicketGoldenRama() throws IOException{
+        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+        String taskId = FileLibOne.getPropertyDataGoldenRama("taskIdGoldenRama");
 
         Response response = given()
                 .cookies(cookies)

@@ -14,6 +14,11 @@ public class ZeptoGetAllPendingTicketsTest extends ZeptoLogin {
 
     @Test
     public void getAllPendingTickets() {
+        try {
+            Thread.sleep(1000); // Add a wait time of 300 milliseconds after executing login method
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Response response = given()
                 .cookies(cookies)

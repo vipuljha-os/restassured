@@ -19,7 +19,11 @@ public class ZeptoJunkTicketTest extends ZeptoLogin {
     public void junkTicket() throws IOException {
         String ticketId = FileLibOne.getPropertyData("ticketId");
         String taskId = FileLibOne.getPropertyData("taskId");
-
+        try {
+            Thread.sleep(1000); // Add a wait time of 300 milliseconds after executing login method
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Response response = RestAssured.given()
                 .formParam("task_id", taskId)
                 .formParam("ticket_id", ticketId)

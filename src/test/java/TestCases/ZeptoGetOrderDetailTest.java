@@ -13,6 +13,11 @@ import static org.testng.Assert.assertTrue;
 public class ZeptoGetOrderDetailTest extends ZeptoLogin {
     @Test
     public void getOrderDetail() {
+        try {
+            Thread.sleep(1000); // Add a wait time of 300 milliseconds after executing login method
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String jsonBody = "{\"customerId\":\"\",\"email\":\"\",\"phone\":\"\",\"shipmentId\":\"\",\"ticketId\":\"723110165341\",\"taskId\":591100846,\"orderId\":\"193DBBKNH86124\",\"otherDetail\":{\"userId\":\"101b3bbd-4213-4d8d-81c4-c7bdf25c66db\"}}";
         Response response = given()
                 .contentType(ContentType.JSON)

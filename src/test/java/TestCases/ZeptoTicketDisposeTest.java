@@ -14,8 +14,14 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class ZeptoTicketDisposeTest extends ZeptoLogin {
+
     @Test
     public void disposeTicket() throws IOException {
+        try {
+            Thread.sleep(1000); // Add a wait time of 300 milliseconds after executing login method
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         String ticketId = FileLibOne.getPropertyData("ticketId");
         String taskId = FileLibOne.getPropertyData("taskId");

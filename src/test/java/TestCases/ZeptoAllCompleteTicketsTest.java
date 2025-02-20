@@ -13,6 +13,11 @@ import static org.testng.Assert.assertTrue;
 public class ZeptoAllCompleteTicketsTest extends ZeptoLogin {
     @Test
     public void getAllCompleteTickets() {
+        try {
+            Thread.sleep(1000); // Add a wait time of 300 milliseconds after executing login method
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Response response = given()
                 .cookies(cookies)
                 .formParam("type", "3")

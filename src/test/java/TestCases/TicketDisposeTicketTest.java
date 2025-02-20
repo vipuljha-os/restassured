@@ -14,6 +14,11 @@ import static org.testng.Assert.assertTrue;
 public class TicketDisposeTicketTest extends MeeshoSXLogin {
     @Test
     public void disposeTicket() {
+        try {
+            Thread.sleep(1000); // Add a wait time of 300 milliseconds after executing login method
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Response response = RestAssured.given()
                 .contentType(ContentType.JSON)
                 .formParam("task_id", "528961224")

@@ -19,6 +19,12 @@ public class ZeptoAddTicketTest extends ZeptoLogin {
     @Test
     void addTicket() {
 
+        try {
+            Thread.sleep(1000); // Add a wait time of 300 milliseconds after executing login method
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Response response = given()
                 .cookies(cookies)
                 //.formParams(map)

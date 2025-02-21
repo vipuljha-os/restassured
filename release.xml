@@ -28,7 +28,7 @@
             <class name="TestCases.GoldenRamaPendingByTeamTicketsTest" />
             <class name="TestCases.GoldenRamaGetAssignedToMeTicketsTest" />
             <class name="TestCases.DanaAddTicketTest" />
-            <class name="TestCases.DanaAssignedToMeTicketTest" />
+            <class name="TestCases.DanaAssignToTicketTest" />
             <class name="TestCases.DanaSearchTicketTest" />
             <class name="TestCases.DanaAddAttachmentTicketTest" />
             <class name="TestCases.DanaAddNotesTicketTest" />

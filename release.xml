@@ -4,13 +4,20 @@
     </listeners>
     <test name="KaptureBackend">
         <classes>
-            <class name="TestCases.CruiseBookingStep1" />
-            <class name="TestCases.CruiseBookingStep2" />
-            <class name="TestCases.CruiseBookingStep3" />
-            <class name="TestCases.CruiseBookingStep4" />
-            <class name="TestCases.CruiseBookingStep5" />
-            <class name="TestCases.CruiseBookingStep6" />
-            <class name="TestCases.CruiseBookingStep7" />
+<!--            <class name="TestCases.CruiseBookingStep1" />-->
+<!--            <class name="TestCases.CruiseBookingStep2" />-->
+<!--            <class name="TestCases.CruiseBookingStep3" />-->
+<!--            <class name="TestCases.CruiseBookingStep4" />-->
+<!--            <class name="TestCases.CruiseBookingStep5" />-->
+<!--            <class name="TestCases.CruiseBookingStep6" />-->
+<!--            <class name="TestCases.CruiseBookingStep7" />-->
+            <class name="TestCases.CruiseBookingStepOne" />
+            <class name="TestCases.CruiseBookingStepTwo" />
+            <class name="TestCases.CruiseBookingStepThree" />
+            <class name="TestCases.CruiseBookingStepFour" />
+            <class name="TestCases.CruiseBookingStepFive" />
+            <class name="TestCases.CruiseBookingStepSix" />
+            <class name="TestCases.CruiseBookingStepSeven" />
         </classes>
     </test>
 </suite>

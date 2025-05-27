@@ -15,8 +15,8 @@ public class GoldenRamaLogin {
     //@BeforeClass
     @Test
     public void GoldenRamalogin() {
-        String username = "Test@kaptue.cx";
-        String password = "Test@1234";
+        String username = "shankar.lamani@kapturecrm.com";
+        String password = "Testing@1234567";
 
         Response response = RestAssured.given()
                 .queryParam("username", username)

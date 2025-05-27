@@ -1,7 +1,8 @@
 package TestCases;
 
 import FileUtility.FileLibOne;
-import Generic.GoldenRamaLogin;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
 import Generic.GoldenRamaRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -13,15 +14,17 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
+public class DanaJunkTicketTest extends DanaLogin {
     @Test
-    public void getTicketAttachmentGoldenRama() throws IOException {
-        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+    public void junkTicketDana() throws IOException{
+        String taskId = FileLibOne.getPropertyDataDana("taskIdDana");
+        String ticketId = FileLibOne.getPropertyDataDana("ticketIdDana");
         Response response = given()
                 .cookies(cookies)
-                .queryParam("ticketIds",ticketId)
+                .formParam("task_id", taskId)
+                .formParam("remark", "Test")
                 .when()
-                .post(GoldenRamaRoutes.getAttachment);
+                .post(DanaRoutes.JunkTicket);
 
         response.then().log().all();
 
@@ -40,10 +43,10 @@ public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
         JsonPath jsonPath = new JsonPath(responseBody);
 
         Object responseParamValidation = jsonPath.get("status");
-        assertEquals(String.valueOf(responseParamValidation), "Success");
+        assertEquals(String.valueOf(responseParamValidation), "success");
 
         System.out.println("------------------------------");
         System.out.println("Status => " + responseParamValidation);
-
+        System.out.println("Ticket successfully Junked for Ticket Id => " + ticketId);
     }
 }

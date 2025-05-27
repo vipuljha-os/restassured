@@ -16,9 +16,9 @@ import static org.testng.Assert.assertTrue;
 
 public class GoldenRamaAddNotesToTicketTest extends GoldenRamaLogin {
     @Test
-    public void addNotes() throws IOException {
-        String taskId = FileLibOne.getPropertyData("taskId");
-        String ticketId = FileLibOne.getPropertyData("ticketId");
+    public void addNotesGoldenRama() throws IOException {
+        String taskId = FileLibOne.getPropertyDataGoldenRama("taskIdGoldenRama");
+        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
         String note = "This is test by Kapture";
 
         Response response = given()

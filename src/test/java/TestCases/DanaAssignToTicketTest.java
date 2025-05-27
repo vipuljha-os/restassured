@@ -1,24 +1,33 @@
 package TestCases;
 
-import Generic.GoldenRamaLogin;
+import FileUtility.FileLibOne;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
 import Generic.GoldenRamaRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoldenRamaGetAllPendingTicketsTest extends GoldenRamaLogin {
+public class DanaAssignToTicketTest extends DanaLogin {
     @Test
-    public void getAllPendingTicketsGoldenRama(){
+    public void assignToTicketDana() throws IOException{
+        String ticketId = FileLibOne.getPropertyDataDana("ticketIdDana");
+        String taskId = FileLibOne.getPropertyDataDana("taskIdDana");
+
         Response response = given()
                 .cookies(cookies)
-                .formParam("type","2")
-                .formParam("status","P")
+                .formParam("task_id", taskId)
+                .formParam("ticket_id",ticketId)
+                .formParam("assign_to","265342#Test 1")
+                .formParam("task_detail","Test")
                 .when()
-                .post(GoldenRamaRoutes.GetTicketList);
+                .post(DanaRoutes.assignToTicket);
 
         response.then().log().all();
 
@@ -39,7 +48,7 @@ public class GoldenRamaGetAllPendingTicketsTest extends GoldenRamaLogin {
         assertEquals(String.valueOf(responseParamValidation), "Success");
         System.out.println("-------------------------------");
         System.out.println("Status ==> " + responseParamValidation);
+        System.out.println("Ticket with ticketId => "+ticketId+" has been successfully assigned to Dana Care");
+
     }
-
-
 }

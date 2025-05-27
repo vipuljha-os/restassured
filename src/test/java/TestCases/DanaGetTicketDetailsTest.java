@@ -1,8 +1,8 @@
 package TestCases;
 
 import FileUtility.FileLibOne;
-import Generic.GoldenRamaLogin;
-import Generic.GoldenRamaRoutes;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
@@ -13,15 +13,16 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
+public class DanaGetTicketDetailsTest extends DanaLogin {
     @Test
-    public void getTicketAttachmentGoldenRama() throws IOException {
-        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+    public void getTicketDetailDana() throws IOException{
+        String ticketId = FileLibOne.getPropertyDataDana("ticketIdDana");
         Response response = given()
+                .queryParam("ticket_id",ticketId)
+                .queryParam("data_type","ticket")
                 .cookies(cookies)
-                .queryParam("ticketIds",ticketId)
                 .when()
-                .post(GoldenRamaRoutes.getAttachment);
+                .get(DanaRoutes.GetTicketDetail);
 
         response.then().log().all();
 
@@ -40,10 +41,13 @@ public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
         JsonPath jsonPath = new JsonPath(responseBody);
 
         Object responseParamValidation = jsonPath.get("status");
-        assertEquals(String.valueOf(responseParamValidation), "Success");
+        assertEquals(String.valueOf(responseParamValidation),"Success");
+
+        Object ticketIdValidation = jsonPath.get("response.ticket.ticketId");
+        assertEquals(String.valueOf(ticketIdValidation),ticketId);
 
         System.out.println("------------------------------");
         System.out.println("Status => " + responseParamValidation);
-
+        System.out.println("Successfully Validated Ticket details for Ticket Id => " + ticketId);
     }
 }

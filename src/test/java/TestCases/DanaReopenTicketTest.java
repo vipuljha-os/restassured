@@ -1,7 +1,8 @@
 package TestCases;
 
 import FileUtility.FileLibOne;
-import Generic.GoldenRamaLogin;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
 import Generic.GoldenRamaRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -13,37 +14,38 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
+public class DanaReopenTicketTest extends DanaLogin {
     @Test
-    public void getTicketAttachmentGoldenRama() throws IOException {
-        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+    public void reopenTicketDana() throws IOException{
+        String ticketId = FileLibOne.getPropertyDataDana("ticketIdDana");
+        String taskId = FileLibOne.getPropertyDataDana("taskIdDana");
+
         Response response = given()
                 .cookies(cookies)
-                .queryParam("ticketIds",ticketId)
+                .formParam("task_ids", taskId)
+                .formParam("task_detail","Test")
                 .when()
-                .post(GoldenRamaRoutes.getAttachment);
+                .post(DanaRoutes.reopenTicket);
 
         response.then().log().all();
 
-        //Status code validation
+        //validate status code
         int statusCode = response.getStatusCode();
-        System.out.println("Status Code => " + statusCode);
+        System.out.println("Status Code => "+ statusCode);
         response.then().statusCode(200);
 
-        //Response time validation
+        //Response Time validation
         long responseTime = response.getTime();
         System.out.println("Response Time => " + responseTime);
-        assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
+        assertTrue(responseTime < 10000 , "Response time exceeds the acceptable threshold of 10000 milliseconds");
 
-        //Response Param Validation
+        //Param Validation
         String responseBody = response.getBody().asString();
         JsonPath jsonPath = new JsonPath(responseBody);
-
         Object responseParamValidation = jsonPath.get("status");
         assertEquals(String.valueOf(responseParamValidation), "Success");
-
-        System.out.println("------------------------------");
-        System.out.println("Status => " + responseParamValidation);
-
+        System.out.println("-------------------------------");
+        System.out.println("Status ==> " + responseParamValidation);
+        System.out.println("Ticket with ticketId => "+ticketId+" has been successfully reopened.");
     }
 }

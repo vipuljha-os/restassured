@@ -1,30 +1,37 @@
 package TestCases;
 
 import FileUtility.FileLibOne;
-import Generic.GoldenRamaLogin;
-import Generic.GoldenRamaRoutes;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
+
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
-
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoldenRamaSearchTicketTest extends GoldenRamaLogin {
+public class DanaAddAttachmentTicketTest extends DanaLogin {
     @Test
-    public void searchTicketGoldenRama() throws IOException {
-        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+    public void addAttachmentDana() throws IOException{
+        String taskId = FileLibOne.getPropertyDataDana("taskIdDana");
+        String ticketId = FileLibOne.getPropertyDataDana("ticketIdDana");
 
         Response response = RestAssured.given()
-                .formParam("query", ticketId)
+                .redirects().follow(false)
+                .multiPart("attach_1", new File("/opt/atlassian/pipelines/agent/build/src/test/java/FileUtility/attach.jpeg"))
+                .formParam("task_id",taskId)
+                .formParam("response_type","json")
+                .formParam("total_attachment","1")
                 .cookies(cookies)
-                .post(GoldenRamaRoutes.GetTicketList);
+                .post(DanaRoutes.addAttachment);
 
         response.then().log().all();
+        System.out.println("Redirect Location: " + response.getHeader("Location"));
 
         //status Code Validation
         int statusCode = response.statusCode();
@@ -34,21 +41,17 @@ public class GoldenRamaSearchTicketTest extends GoldenRamaLogin {
         //Response time validation
         long responseTime = response.getTime();
         System.out.println("Response Time => " + responseTime);
-        assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
+        assertTrue(responseTime < 5000, "Response time exceeds the acceptable threshold of 5000 milliseconds");
 
         // Parameter validation
         String responseBody = response.getBody().asString();
         JsonPath jsonPath = new JsonPath(responseBody);
 
         Object responseParameterValidation = jsonPath.get("status");
-        assertEquals(String.valueOf(responseParameterValidation), "Success");
-
-        Object ticketSearchValidation = jsonPath.get("response.tickets[0].ticketId");
-        assertEquals(String.valueOf(ticketSearchValidation), ticketId);
+        assertEquals(String.valueOf(responseParameterValidation), "success");
 
         System.out.println("-------------------------------");
         System.out.println("Status => " + responseParameterValidation);
-        System.out.println("Ticket Search successfully Completed for Ticket_Id : " + ticketId);
+        System.out.println("Attachment added successfully for Ticket_Id : " + ticketId);
     }
-
 }

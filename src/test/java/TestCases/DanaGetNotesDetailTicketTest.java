@@ -1,27 +1,34 @@
 package TestCases;
 
 import FileUtility.FileLibOne;
-import Generic.GoldenRamaLogin;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
 import Generic.GoldenRamaRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
+public class DanaGetNotesDetailTicketTest extends DanaLogin {
     @Test
-    public void getTicketAttachmentGoldenRama() throws IOException {
-        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+    public void getNotesDetailDana() throws IOException{
+        String taskId = FileLibOne.getPropertyDataDana("taskIdDana");
+        String ticketId = FileLibOne.getPropertyDataDana("ticketIdDana");
+        String note = "This is a note";
+
         Response response = given()
+                .formParam("id", taskId)
+                .formParam("ticket_id", ticketId)
+                .formParam("data_type", "NOTES")
                 .cookies(cookies)
-                .queryParam("ticketIds",ticketId)
                 .when()
-                .post(GoldenRamaRoutes.getAttachment);
+                .post(DanaRoutes.GetTicketDetail);
 
         response.then().log().all();
 
@@ -42,8 +49,11 @@ public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
         Object responseParamValidation = jsonPath.get("status");
         assertEquals(String.valueOf(responseParamValidation), "Success");
 
+        List<String> noteDataValidation = jsonPath.getList("response.notes.detail");
+        assertTrue(noteDataValidation.contains(note), "No note found with the expected detail value");
+
         System.out.println("------------------------------");
         System.out.println("Status => " + responseParamValidation);
-
+        System.out.println("Successfully Added a note for Ticket id => " + noteDataValidation);
     }
 }

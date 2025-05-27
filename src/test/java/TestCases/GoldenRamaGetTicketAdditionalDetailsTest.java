@@ -15,8 +15,8 @@ import static org.testng.Assert.assertTrue;
 
 public class GoldenRamaGetTicketAdditionalDetailsTest extends GoldenRamaLogin {
     @Test
-    public void getTicketAdditionalDetails() throws IOException {
-        String taskId = FileLibOne.getPropertyData("taskId");
+    public void getTicketAdditionalDetailsGoldenRama() throws IOException {
+        String taskId = FileLibOne.getPropertyDataGoldenRama("taskIdGoldenRama");
 
         Response response = given()
                 .queryParam("id", taskId)

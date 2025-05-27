@@ -16,7 +16,7 @@ public class GoldenRamaAddTicketTest extends GoldenRamaLogin {
     public String ticketId;
     public String taskId;
     @Test
-    public void addTicket(){
+    public void addTicketGoldenRama(){
         Response response = given()
                 .cookies(cookies)
                 //.formParams(map)
@@ -67,6 +67,6 @@ public class GoldenRamaAddTicketTest extends GoldenRamaLogin {
         assertThat(ForResponseParametersValidation, equalTo("Pending"));
         System.out.println("------------------------------");
         System.out.println("Ticket has been added successfully with Ticket_Id : " + ticketId);
-        FileLibOne.writeDataIntoPropertyFile(ticketId, taskId);
+        FileLibOne.writeDataIntoPropertyFileGoldenRama(ticketId, taskId);
     }
 }

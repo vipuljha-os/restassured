@@ -3,7 +3,6 @@ package TestCases;
 import FileUtility.FileLibOne;
 import Generic.GoldenRamaLogin;
 import Generic.GoldenRamaRoutes;
-import Generic.ZeptoRoutes;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -11,16 +10,15 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class GoldenRamaDisposeTicketTest extends GoldenRamaLogin {
 
     @Test
-    public void disposeTicket() throws IOException {
-        String ticketId = FileLibOne.getPropertyData("ticketId");
-        String taskId = FileLibOne.getPropertyData("taskId");
+    public void disposeTicketGoldenRama() throws IOException {
+        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+        String taskId = FileLibOne.getPropertyDataGoldenRama("taskIdGoldenRama");
 
         Response response = RestAssured.given()
                 .formParam("task_id", taskId)

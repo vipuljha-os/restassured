@@ -6,21 +6,21 @@ import io.restassured.http.Cookies;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
-import static Generic.GoldenRamaRoutes.GoldenRamalogin;
+import static Generic.DanaRoutes.danaLogin;
 
-public class GoldenRamaLogin {
+public class DanaLogin {
     public Cookies cookies;
 
     //@BeforeClass
     @Test
-    public void GoldenRamalogin() {
-        String username = "shankar.lamani@kapturecrm.com";
-        String password = "Testing@1234567";
+    public void danaLogin() {
+        String username = "syed.ameenmail1@gmail.com";
+        String password = "Test@1234";
 
         Response response = RestAssured.given()
                 .queryParam("username", username)
                 .queryParam("password", password)
-                .get(GoldenRamalogin);
+                .get(danaLogin);
         response.then().log().all();
 
         try {
@@ -28,7 +28,7 @@ public class GoldenRamaLogin {
             System.out.println("*****************************");
             System.out.println(cookies);
             System.out.println("Login method is executed");
-            FileLib.writeDataIntoPropertyFileGoldenRama(String.valueOf(cookies));
+            FileLib.writeDataIntoPropertyFileDana(String.valueOf(cookies));
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("An error occurred while processing cookies or writing to the property file.");
@@ -39,5 +39,5 @@ public class GoldenRamaLogin {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-  }
+    }
 }

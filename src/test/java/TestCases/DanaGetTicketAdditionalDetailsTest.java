@@ -1,8 +1,8 @@
 package TestCases;
 
 import FileUtility.FileLibOne;
-import Generic.GoldenRamaLogin;
-import Generic.GoldenRamaRoutes;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
@@ -13,15 +13,17 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
+public class DanaGetTicketAdditionalDetailsTest extends DanaLogin {
     @Test
-    public void getTicketAttachmentGoldenRama() throws IOException {
-        String ticketId = FileLibOne.getPropertyDataGoldenRama("ticketIdGoldenRama");
+    public void getAdditionalDetailsDana() throws IOException{
+        String taskId = FileLibOne.getPropertyDataDana("taskIdDana");
+
         Response response = given()
+                .queryParam("id", taskId)
+                .queryParam("data_type", "additional_info")
                 .cookies(cookies)
-                .queryParam("ticketIds",ticketId)
                 .when()
-                .post(GoldenRamaRoutes.getAttachment);
+                .get(DanaRoutes.GetTicketDetail);
 
         response.then().log().all();
 
@@ -44,6 +46,5 @@ public class GoldenRamaGetTicketAttachmentTest extends GoldenRamaLogin {
 
         System.out.println("------------------------------");
         System.out.println("Status => " + responseParamValidation);
-
     }
 }

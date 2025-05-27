@@ -1,7 +1,9 @@
 package TestCases;
 
-import Generic.ZeptoLogin;
-import Generic.ZeptoRoutes;
+import FileUtility.FileLibOne;
+import Generic.DanaLogin;
+import Generic.DanaRoutes;
+import Generic.GoldenRamaRoutes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
@@ -12,36 +14,40 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class ZeptoGetTicketDetailsTest extends ZeptoLogin {
+public class DanaGetTicketHistoryTest extends DanaLogin {
     @Test
-    public void getTicketDetails() {
+    public void getTicketHistoryDana() throws IOException{
+
+        String taskId = FileLibOne.getPropertyDataDana("taskIdDana");
+
         Response response = given()
+                .queryParam("id",taskId)
+                .queryParam("data_type","history")
                 .cookies(cookies)
-                .formParam("id", "591100846")
-                .formParam("ticket_id", "723110165341")
-                .formParam("data_type", "ticket")
                 .when()
-                .post(ZeptoRoutes.GetTicketDetail);
+                .get(DanaRoutes.GetTicketDetail);
+
         response.then().log().all();
 
         //Status code validation
         int statusCode = response.getStatusCode();
-        System.out.println("status code =" + statusCode);
+        System.out.println("Status Code => " + statusCode);
         response.then().statusCode(200);
 
         //Response time validation
         long responseTime = response.getTime();
-        System.out.println("Response Time =" + responseTime);
+        System.out.println("Response Time => " + responseTime);
         assertTrue(responseTime < 3000, "Response time exceeds the acceptable threshold of 3000 milliseconds");
 
+        //Response Param Validation
         String responseBody = response.getBody().asString();
-        System.out.println(responseBody);
         JsonPath jsonPath = new JsonPath(responseBody);
 
-        Object ForResponseParametersValidation = jsonPath.get("status");
-        assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
-        System.out.println("******************************");
-        System.out.println(ForResponseParametersValidation);
+        Object responseParamValidation = jsonPath.get("status");
+        assertEquals(String.valueOf(responseParamValidation),"Success");
 
+        System.out.println("------------------------------");
+        System.out.println("Status => " + responseParamValidation);
     }
+
 }

@@ -27,6 +27,27 @@
             <class name="TestCases.GoldenRamaGetUnassignedTicketsTest" />
             <class name="TestCases.GoldenRamaPendingByTeamTicketsTest" />
             <class name="TestCases.GoldenRamaGetAssignedToMeTicketsTest" />
+            <class name="TestCases.DanaAddTicketTest" />
+            <class name="TestCases.DanaAssignToTicketTest" />
+            <class name="TestCases.DanaSearchTicketTest" />
+            <class name="TestCases.DanaAddAttachmentTicketTest" />
+            <class name="TestCases.DanaAddNotesTicketTest" />
+            <class name="TestCases.DanaGetNotesDetailTicketTest" />
+            <class name="TestCases.DanaGetTicketAttachmentTest" />
+            <class name="TestCases.DanaGetTicketDetailsTest" />
+            <class name="TestCases.DanaGetTicketAdditionalDetailsTest" />
+            <class name="TestCases.DanaGetTicketHistoryTest" />
+            <class name="TestCases.DanaDisposeTicketTest" />
+            <class name="TestCases.DanaReopenTicketTest" />
+            <class name="TestCases.DanaJunkTicketTest" />
+            <class name="TestCases.DanaCannedResponseTicketTest" />
+            <class name="TestCases.DanaCompletedByMeTicketsTest" />
+            <class name="TestCases.DanaCreatedByMeTicketsTest" />
+            <class name="TestCases.DanaGetAllCompleteTicketsTest" />
+            <class name="TestCases.DanaGetAllJunkTicketsTest" />
+            <class name="TestCases.DanaGetAllPendingTicketsTest" />
+            <class name="TestCases.DanaGetUnassignedTicketsTest" />
+            <class name="TestCases.DanaAssignedToMeTicketTest" />
         </classes>
     </test>
 </suite>

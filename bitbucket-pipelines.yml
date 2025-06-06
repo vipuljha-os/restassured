@@ -2,39 +2,15 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build, Echo Test Script Paths, Run Tests, Rerun Failed Tests, and Send Results to Google Chat
+          name: Build, Test, Rerun Failed Tests, and Send Results to Google Chat
           image: maven:3.8.5-openjdk-17
           caches:
             - maven
           script:
-            - apt-get update && apt-get install -y curl jq
+            - apt-get update && apt-get install -y curl
             - set +e
-
-            # Echo test scripts
-            - echo "Test scripts path:"
-            - find $(pwd) -name "*.java"
-
-            # Run tests
-            - mvn clean test
-
-            # Extract itinerary names
-            - |
-              if [ -f itinerary_name.txt ]; then 
-                ITINERARY_NAME_PARADISE=$(cat itinerary_name.txt) 
-              else 
-                ITINERARY_NAME_PARADISE="Not found" 
-              fi
-              echo "BITBUCKET_LOG: Extracted Itinerary Name for Paradise: $ITINERARY_NAME_PARADISE"
-
-            - |
-              if [ -f itinerary_name_for_CruiseID_77.txt ]; then 
-                ITINERARY_NAME_ISLANDER=$(cat itinerary_name_for_CruiseID_77.txt) 
-              else 
-                ITINERARY_NAME_ISLANDER="Not found" 
-              fi
-              echo "BITBUCKET_LOG: Extracted Itinerary Name for Islander: $ITINERARY_NAME_ISLANDER"
-
-            # Extract test results
+            # Run tests and rerun failing tests once
+            - mvn clean test -Dsurefire.rerunFailingTestsCount=1
             - |
               TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
               TESTS=$(echo $TEST_RESULTS | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')
@@ -42,28 +18,23 @@ pipelines:
               ERRORS=$(echo $TEST_RESULTS | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
               SKIPPED=$(echo $TEST_RESULTS | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*')
 
-              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml)
-              if [ -z "$FAILED_TESTS" ]; then FAILED_TESTS="None"; fi
+              # Extract the names of the failed test cases, limiting to the first 5
+              FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml | head -5)
+              FAILED_TESTS=$(echo "$FAILED_TESTS" | tr '\n' '\n- ' | sed 's/^/- /')
+              if [ -z "$FAILED_TESTS" ]; then
+                FAILED_TESTS="- None"
+              fi
 
-              FAILED_LOGS=$(awk '/<failure/,/<\/failure>/ {print}' target/surefire-reports/*.xml | head -20)
-              if [ -z "$FAILED_LOGS" ]; then FAILED_LOGS="No detailed failure logs available."; fi
+              # Format the message for Google Chat
+              MESSAGE="{
+                \"text\": \"🚀 *UI Test Suite Completed for Major Clients* 🚀\\n
+                🧪 *Total Tests:* $TESTS\\n
+                ❌ *Failures:* $FAILURES\\n
+                ⚠️ *Errors:* $ERRORS\\n
+                ⏭️ *Skipped:* $SKIPPED\\n
+                🔴 *Failed Tests:*\\n$FAILED_TESTS\"
+              }"
 
-              MESSAGE="🚀 *API Test Suite Completed for Client MVAS* 🚀\n
-              🧪 *Total Tests:* $TESTS\n
-              ❌ *Failures:* $FAILURES\n
-              ⚠️ *Errors:* $ERRORS\n
-              ⏭️ *Skipped:* $SKIPPED\n
-              🔴 *Failed Tests:* $FAILED_TESTS\n
-              🛳️ *Extracted Itinerary Name For Paradise:* $ITINERARY_NAME_PARADISE\n
-              🛳️ *Extracted Itinerary Name For Islander:* $ITINERARY_NAME_ISLANDER\n
-              📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
-
-              echo "DEBUG: Message to be sent to Google Chat:"
-              echo "$MESSAGE"
-
-              JSON_MESSAGE=$(jq -n --arg text "$MESSAGE" '{text: $text}')
-              curl -X POST -H 'Content-Type: application/json' \
-                -d "$JSON_MESSAGE" \
-                "https://chat.googleapis.com/v1/spaces/AAAAiaIq2ag/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=xsnEQcplwINyZ9NsrMD_Kesb91_7zHwbjS_JQv6qf5E"
-
+              # Send the message to Google Chat
+              curl -X POST -H 'Content-Type: application/json' -d "$MESSAGE" "https://chat.googleapis.com/v1/spaces/AAAAiaIq2ag/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=xsnEQcplwINyZ9NsrMD_Kesb91_7zHwbjS_JQv6qf5E"
             - set -e

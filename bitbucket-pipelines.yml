@@ -7,15 +7,17 @@ pipelines:
           caches:
             - maven
           script:
-            - apt-get update && apt-get install -y curl
+            - apt-get update && apt-get install -y curl jq
             - set +e
-            # Echo the path of the test scripts
+
+            # Echo test scripts
             - echo "Test scripts path:"
-            - find $(pwd) -name "*.java" # This will list all Java test files
-            # Run tests using release.xml and rerun failing tests once
+            - find $(pwd) -name "*.java"
+
+            # Run tests
             - mvn clean test
 
-            # Extract itinerary names from files
+            # Extract itinerary names
             - |
               if [ -f itinerary_name.txt ]; then 
                 ITINERARY_NAME_PARADISE=$(cat itinerary_name.txt) 
@@ -40,19 +42,12 @@ pipelines:
               ERRORS=$(echo $TEST_RESULTS | grep -o 'errors="[0-9]*"' | grep -o '[0-9]*')
               SKIPPED=$(echo $TEST_RESULTS | grep -o 'skipped="[0-9]*"' | grep -o '[0-9]*')
 
-              # Extract failed test names
               FAILED_TESTS=$(awk -F'"' '/<testcase /{name=$2} /<(failure|error)/{print name}' target/surefire-reports/*.xml)
-              if [ -z "$FAILED_TESTS" ]; then
-                FAILED_TESTS="None"
-              fi
+              if [ -z "$FAILED_TESTS" ]; then FAILED_TESTS="None"; fi
 
-              # Extract full failure logs
               FAILED_LOGS=$(awk '/<failure/,/<\/failure>/ {print}' target/surefire-reports/*.xml | head -20)
-              if [ -z "$FAILED_LOGS" ]; then
-                FAILED_LOGS="No detailed failure logs available."
-              fi
+              if [ -z "$FAILED_LOGS" ]; then FAILED_LOGS="No detailed failure logs available."; fi
 
-              # Format the message for Google Chat
               MESSAGE="🚀 *API Test Suite Completed for Client MVAS* 🚀\n
               🧪 *Total Tests:* $TESTS\n
               ❌ *Failures:* $FAILURES\n
@@ -62,5 +57,13 @@ pipelines:
               🛳️ *Extracted Itinerary Name For Paradise:* $ITINERARY_NAME_PARADISE\n
               🛳️ *Extracted Itinerary Name For Islander:* $ITINERARY_NAME_ISLANDER\n
               📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
-              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAiaIq2ag/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=xsnEQcplwINyZ9NsrMD_Kesb91_7zHwbjS_JQv6qf5E"
-               - set -e
+
+              echo "DEBUG: Message to be sent to Google Chat:"
+              echo "$MESSAGE"
+
+              JSON_MESSAGE=$(jq -n --arg text "$MESSAGE" '{text: $text}')
+              curl -X POST -H 'Content-Type: application/json' \
+                -d "$JSON_MESSAGE" \
+                "https://chat.googleapis.com/v1/spaces/AAAAiaIq2ag/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=xsnEQcplwINyZ9NsrMD_Kesb91_7zHwbjS_JQv6qf5E"
+
+            - set -e

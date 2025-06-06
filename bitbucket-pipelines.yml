@@ -62,5 +62,5 @@ pipelines:
               🛳️ *Extracted Itinerary Name For Paradise:* $ITINERARY_NAME_PARADISE\n
               🛳️ *Extracted Itinerary Name For Islander:* $ITINERARY_NAME_ISLANDER\n
               📜 *Failure Logs:* \n\`\`\`\n$FAILED_LOGS\n\`\`\`"
-              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAAAiaIq2ag/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=xsnEQcplwINyZ9NsrMD_Kesb91_7zHwbjS_JQv6qf5E"
+              curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"${MESSAGE}\"}" "https://chat.googleapis.com/v1/spaces/AAQA4FtXPBc/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=vDRQYWF1tJRlc3ZXXjtAUHRargMwE6doCXR6WrkL9Tc"
                - set -e

@@ -11,6 +11,22 @@ pipelines:
             - set +e
             # Run tests and rerun failing tests once
             - mvn clean test -Dsurefire.rerunFailingTestsCount=1
+            # Extract itinerary names from files
+            - |
+              if [ -f itinerary_name.txt ]; then 
+                ITINERARY_NAME_PARADISE=$(cat itinerary_name.txt) 
+              else 
+                ITINERARY_NAME_PARADISE="Not found" 
+              fi
+              echo "BITBUCKET_LOG: Extracted Itinerary Name for Paradise: $ITINERARY_NAME_PARADISE"
+
+            - |
+              if [ -f itinerary_name_for_CruiseID_77.txt ]; then 
+                ITINERARY_NAME_ISLANDER=$(cat itinerary_name_for_CruiseID_77.txt) 
+              else 
+                ITINERARY_NAME_ISLANDER="Not found" 
+              fi
+              echo "BITBUCKET_LOG: Extracted Itinerary Name for Islander: $ITINERARY_NAME_ISLANDER"
             - |
               TEST_RESULTS=$(grep -o '<testsuite .*' target/surefire-reports/*.xml | head -1)
               TESTS=$(echo $TEST_RESULTS | grep -o 'tests="[0-9]*"' | grep -o '[0-9]*')
@@ -33,6 +49,8 @@ pipelines:
                 ⚠️ *Errors:* $ERRORS\\n
                 ⏭️ *Skipped:* $SKIPPED\\n
                 🔴 *Failed Tests:*\\n$FAILED_TESTS\"
+                🛳️ *Extracted Itinerary Name For Paradise:* $ITINERARY_NAME_PARADISE\n
+                🛳️ *Extracted Itinerary Name For Islander:* $ITINERARY_NAME_ISLANDER\n
               }"
 
               # Send the message to Google Chat

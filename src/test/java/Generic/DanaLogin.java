@@ -14,8 +14,8 @@ public class DanaLogin {
     //@BeforeClass
     @Test
     public void danaLogin() {
-        String username = "syed.ameenmail1@gmail.com";
-        String password = "Test@1234";
+        String username = "ameen.syed@kapturecrm.com";
+        String password = "Test@12354";
 
         Response response = RestAssured.given()
                 .queryParam("username", username)

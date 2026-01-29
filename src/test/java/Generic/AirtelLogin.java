@@ -9,7 +9,6 @@ public class AirtelLogin {
     public void Login() {
         bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyX2lkIiwiZXhwIjoyMDg0MTY1Njg4fQ.B8eG385AekH9eSSBrYo_PrTBb77Ai0boZGfXgwOquo8";
 
-        System.out.println("*****************************");
         System.out.println("Bearer Token: " + bearerToken);
         System.out.println("Login method is executed");
 

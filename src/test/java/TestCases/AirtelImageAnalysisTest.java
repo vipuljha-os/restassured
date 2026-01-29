@@ -44,7 +44,6 @@ public class AirtelImageAnalysisTest extends AirtelLogin {
         Object ForResponseParametersValidation = jsonPath.get("status");
 
         assertEquals(String.valueOf(ForResponseParametersValidation), "Success");
-        System.out.println("******************************");
         System.out.println(ForResponseParametersValidation);
     }
 }

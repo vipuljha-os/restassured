@@ -16,7 +16,7 @@ public class AirtelImageAnalysisTest extends AirtelLogin {
     public void testImageAnalysis() {
         String requestBody = "{\n" +
                 "\"clientID\": \"string\",\n" +
-                "\"checkType\": \"\",\n" +
+                "\"checkType\": \"invoice\",\n" +
                 "\"image_url\": \"https://kapture-p-v2.storage.googleapis.com/14553/chat-attachments/1125/176408077378408e1a3zrz12/kfc_pedido_page-0001.jpg\"\n" +
                 "}";
 

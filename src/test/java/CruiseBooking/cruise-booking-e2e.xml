@@ -1,0 +1,10 @@
+<suite name="CruiseBookingE2E" verbose="1">
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg" />
+    </listeners>
+    <test name="CruiseBookingAllShips">
+        <classes>
+            <class name="CruiseBooking.Test.CruiseBookingE2ETest" />
+        </classes>
+    </test>
+</suite>

@@ -1,25 +1,27 @@
 package CruiseBooking.Data;
 
-import CruiseBooking.Api.CruiseBookingApiClient;
 import CruiseBooking.Model.BookingScenario;
 import CruiseBooking.Model.CabinConfig;
+import CruiseBooking.Steps.E2EStepFour;
+import CruiseBooking.Steps.E2EStepOne;
+import CruiseBooking.Steps.E2EStepTwo;
 import CruiseBooking.Util.GuestComboGenerator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.annotations.DataProvider;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class BookingDataProvider {
 
     @DataProvider(name = "cruiseBookingScenarios")
     public static Object[][] getCruiseBookingScenarios() {
-        CruiseBookingApiClient apiClient = new CruiseBookingApiClient();
         List<BookingScenario> scenarios = new ArrayList<>();
 
-        // Step 1: Get all itineraries
-        JSONObject step1Response = apiClient.getItineraryAvailability();
+        // Step 1: Get all itineraries across all cruises
+        JSONObject step1Response = E2EStepOne.getItineraryAvailability();
         String sessionId = (String) step1Response.get("session_id");
         JSONArray allItineraries = (JSONArray) step1Response.get("available_itineries_details");
 
@@ -27,27 +29,23 @@ public class BookingDataProvider {
             throw new RuntimeException("Step 1 returned no itineraries");
         }
 
-        // Group itineraries by cruise_id, pick first itinerary per cruise
-        Map<Long, JSONObject> onPerCruise = pickOneItineraryPerCruise(allItineraries);
+        // Group by cruise_id, pick first itinerary per cruise
+        Map<Long, JSONObject> onePerCruise = E2EStepOne.pickOneItineraryPerCruise(allItineraries);
 
-        System.out.println("=== Cruises found: " + onPerCruise.keySet() + " ===");
+        System.out.println("=== Cruises found: " + onePerCruise.keySet() + " ===");
 
-        for (Map.Entry<Long, JSONObject> entry : onPerCruise.entrySet()) {
+        for (Map.Entry<Long, JSONObject> entry : onePerCruise.entrySet()) {
             long cruiseId = entry.getKey();
             JSONObject itinerary = entry.getValue();
 
-            String itineraryTitle = (String) itinerary.get("itinerary_title");
-            if (itineraryTitle == null) {
-                itineraryTitle = (String) itinerary.get("itinerary_name");
-            }
-
-            String yearMonth = extractYearMonth(itinerary);
+            String itineraryTitle = E2EStepTwo.extractItineraryTitle(itinerary);
+            String yearMonth = E2EStepTwo.extractYearMonth(itinerary);
 
             System.out.println("=== Processing cruise " + cruiseId
                     + ", itinerary: " + itineraryTitle + " ===");
 
             // Step 2: Get sailing details for this itinerary
-            JSONObject step2Response = apiClient.getSailingDetails(itineraryTitle, sessionId, yearMonth);
+            JSONObject step2Response = E2EStepTwo.getSailingDetails(itineraryTitle, sessionId, yearMonth);
             JSONArray sailings = (JSONArray) step2Response.get("sailing_details");
 
             if (sailings == null || sailings.isEmpty()) {
@@ -65,8 +63,8 @@ public class BookingDataProvider {
                     + " (" + sailingType + ") ===");
 
             // Step 4: Get category availability
-            JSONObject step4Response = apiClient.getCategoryAvailability(cruiseId, sailingDate, sailingType);
-            String categoryId = extractFirstAvailableCategory(step4Response);
+            JSONObject step4Response = E2EStepFour.getCategoryAvailability(cruiseId, sailingDate, sailingType);
+            String categoryId = E2EStepFour.extractFirstAvailableCategory(step4Response);
 
             if (categoryId == null) {
                 System.out.println("No available category for cruise " + cruiseId
@@ -98,66 +96,5 @@ public class BookingDataProvider {
             data[i][0] = scenarios.get(i);
         }
         return data;
-    }
-
-    private static Map<Long, JSONObject> pickOneItineraryPerCruise(JSONArray itineraries) {
-        Map<Long, JSONObject> perCruise = new LinkedHashMap<>();
-        for (Object obj : itineraries) {
-            JSONObject itin = (JSONObject) obj;
-            Object cruiseIdObj = itin.get("cruise_id");
-            long cruiseId;
-            if (cruiseIdObj instanceof Long) {
-                cruiseId = (Long) cruiseIdObj;
-            } else {
-                cruiseId = Long.parseLong(cruiseIdObj.toString());
-            }
-            if (!perCruise.containsKey(cruiseId)) {
-                perCruise.put(cruiseId, itin);
-            }
-        }
-        return perCruise;
-    }
-
-    private static String extractYearMonth(JSONObject itinerary) {
-        // Try to extract year/month from the itinerary's sailing date
-        String lastSailingDate = (String) itinerary.get("last_sailing_start_date");
-        if (lastSailingDate != null) {
-            try {
-                SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-                Date date = inputFormat.parse(lastSailingDate);
-                SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM");
-                return outputFormat.format(date);
-            } catch (Exception e) {
-                System.out.println("Could not parse date: " + lastSailingDate
-                        + ". Using fallback.");
-            }
-        }
-
-        // Fallback: 6 months from now
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, 6);
-        return new SimpleDateFormat("yyyy/MM").format(cal.getTime());
-    }
-
-    private static String extractFirstAvailableCategory(JSONObject step4Response) {
-        // Check "2_day" first, then "1_way_onward"
-        String[] sailingKeys = {"2_day", "1_way_onward"};
-
-        for (String key : sailingKeys) {
-            JSONObject sailingObj = (JSONObject) step4Response.get(key);
-            if (sailingObj == null) continue;
-
-            JSONArray availability = (JSONArray) sailingObj.get("availability");
-            if (availability == null) continue;
-
-            for (Object obj : availability) {
-                JSONObject room = (JSONObject) obj;
-                long availableRoom = Long.parseLong(room.get("available_room").toString());
-                if (availableRoom > 0) {
-                    return room.get("category_id").toString();
-                }
-            }
-        }
-        return null;
     }
 }

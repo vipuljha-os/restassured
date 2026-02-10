@@ -1,13 +1,14 @@
 package CruiseBooking.Test;
 
-import CruiseBooking.Api.CruiseBookingApiClient;
 import CruiseBooking.Data.BookingDataProvider;
 import CruiseBooking.Model.BookingResult;
 import CruiseBooking.Model.BookingScenario;
 import CruiseBooking.Report.BookingResultTracker;
+import CruiseBooking.Steps.E2EStepFive;
+import CruiseBooking.Steps.E2EStepSix;
+import CruiseBooking.Steps.E2EStepSeven;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
@@ -15,7 +16,6 @@ import org.testng.asserts.SoftAssert;
 
 public class CruiseBookingE2ETest {
 
-    private final CruiseBookingApiClient apiClient = new CruiseBookingApiClient();
     private final BookingResultTracker tracker = BookingResultTracker.getInstance();
 
     @Test(dataProvider = "cruiseBookingScenarios", dataProviderClass = BookingDataProvider.class,
@@ -49,7 +49,7 @@ public class CruiseBookingE2ETest {
     @Step("Step 5: Search Room Availability - Cruise {scenario.cruiseId}, {scenario.cabinConfig}")
     private String executeStep5(BookingScenario scenario, BookingResult result, SoftAssert softAssert) {
         try {
-            JSONObject response = apiClient.searchRoomAvailability(
+            JSONObject response = E2EStepFive.searchRoomAvailability(
                     scenario.getCruiseId(),
                     scenario.getSailingDate(),
                     scenario.getSailingType(),
@@ -65,16 +65,13 @@ public class CruiseBookingE2ETest {
                 return null;
             }
 
-            JSONArray roomDetails = (JSONArray) response.get("room_details");
-            if (roomDetails == null || roomDetails.isEmpty()) {
+            String roomId = E2EStepFive.extractRoomId(response);
+            if (roomId == null) {
                 result.setStep5Status("FAIL");
                 result.setErrorMessage("Step5: no room_details returned");
                 softAssert.fail("Step 5 failed: no room_details");
                 return null;
             }
-
-            JSONObject firstRoom = (JSONObject) roomDetails.get(0);
-            String roomId = (String) firstRoom.get("room_id");
 
             result.setStep5Status("PASS");
             System.out.println("Step 5 PASS - room_id: " + roomId);
@@ -92,7 +89,7 @@ public class CruiseBookingE2ETest {
     private void executeStep6(BookingScenario scenario, BookingResult result,
                               String roomId, SoftAssert softAssert) {
         try {
-            JSONObject response = apiClient.getBookingPreview(
+            JSONObject response = E2EStepSix.getBookingPreview(
                     scenario.getCruiseId(),
                     scenario.getSailingDate(),
                     scenario.getSailingType(),
@@ -127,7 +124,7 @@ public class CruiseBookingE2ETest {
     private void executeStep7(BookingScenario scenario, BookingResult result,
                               String roomId, SoftAssert softAssert) {
         try {
-            JSONObject response = apiClient.confirmBooking(
+            JSONObject response = E2EStepSeven.confirmBooking(
                     scenario.getCruiseId(),
                     scenario.getSailingDate(),
                     scenario.getSailingType(),

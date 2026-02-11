@@ -38,48 +38,62 @@ public class BookingDataProvider {
             long cruiseId = entry.getKey();
             JSONObject itinerary = entry.getValue();
 
-            String itineraryTitle = E2EStepTwo.extractItineraryTitle(itinerary);
-            String yearMonth = E2EStepTwo.extractYearMonth(itinerary);
+            try {
+                String itineraryTitle = E2EStepTwo.extractItineraryTitle(itinerary);
+                String yearMonth = E2EStepTwo.extractYearMonth(itinerary);
 
-            System.out.println("=== Processing cruise " + cruiseId
-                    + ", itinerary: " + itineraryTitle + " ===");
+                System.out.println("=== Processing cruise " + cruiseId
+                        + ", itinerary: " + itineraryTitle + " ===");
 
-            // Step 2: Get sailing details for this itinerary
-            JSONObject step2Response = E2EStepTwo.getSailingDetails(itineraryTitle, sessionId, yearMonth);
-            JSONArray sailings = (JSONArray) step2Response.get("sailing_details");
+                // Step 2: Get sailing details for this itinerary
+                JSONObject step2Response = E2EStepTwo.getSailingDetails(itineraryTitle, sessionId, yearMonth);
+                JSONArray sailings = (JSONArray) step2Response.get("sailing_details");
 
-            if (sailings == null || sailings.isEmpty()) {
-                System.out.println("No sailings found for cruise " + cruiseId
-                        + ", itinerary " + itineraryTitle + ". Skipping.");
-                continue;
-            }
+                if (sailings == null || sailings.isEmpty()) {
+                    System.out.println("No sailings found for cruise " + cruiseId
+                            + ", itinerary " + itineraryTitle + ". Skipping.");
+                    continue;
+                }
 
-            // Pick first sailing
-            JSONObject sailing = (JSONObject) sailings.get(0);
-            String sailingDate = (String) sailing.get("sailing_date");
-            String sailingType = (String) sailing.get("sailing_type");
+                // Pick first sailing - field is "sailing_start_date" in Step 2 response
+                JSONObject sailing = (JSONObject) sailings.get(0);
+                String sailingDate = (String) sailing.get("sailing_start_date");
+                String sailingType = (String) sailing.get("sailing_type");
 
-            System.out.println("=== Selected sailing: " + sailingDate
-                    + " (" + sailingType + ") ===");
+                System.out.println("=== Sailing object keys: " + sailing.keySet() + " ===");
+                System.out.println("=== Selected sailing: " + sailingDate
+                        + " (" + sailingType + ") ===");
 
-            // Step 4: Get category availability
-            JSONObject step4Response = E2EStepFour.getCategoryAvailability(cruiseId, sailingDate, sailingType);
-            String categoryId = E2EStepFour.extractFirstAvailableCategory(step4Response);
+                if (sailingDate == null || sailingDate.isEmpty()) {
+                    System.out.println("WARNING: sailing_start_date is null/empty for cruise "
+                            + cruiseId + ". Full sailing object: " + sailing.toJSONString());
+                    continue;
+                }
 
-            if (categoryId == null) {
-                System.out.println("No available category for cruise " + cruiseId
-                        + ", sailing " + sailingDate + ". Skipping.");
-                continue;
-            }
+                // Step 4: Get category availability
+                JSONObject step4Response = E2EStepFour.getCategoryAvailability(cruiseId, sailingDate, sailingType);
+                String categoryId = E2EStepFour.extractFirstAvailableCategory(step4Response);
 
-            System.out.println("=== Selected category: " + categoryId + " ===");
+                if (categoryId == null) {
+                    System.out.println("No available category for cruise " + cruiseId
+                            + ", sailing " + sailingDate + ". Step 4 response: "
+                            + step4Response.toJSONString());
+                    continue;
+                }
 
-            // Generate scenarios for all 20 guest combos
-            for (CabinConfig combo : GuestComboGenerator.getAllCombos()) {
-                scenarios.add(new BookingScenario(
-                        cruiseId, itineraryTitle, sessionId,
-                        sailingDate, sailingType, categoryId, combo
-                ));
+                System.out.println("=== Selected category: " + categoryId + " ===");
+
+                // Generate scenarios for all 20 guest combos
+                for (CabinConfig combo : GuestComboGenerator.getAllCombos()) {
+                    scenarios.add(new BookingScenario(
+                            cruiseId, itineraryTitle, sessionId,
+                            sailingDate, sailingType, categoryId, combo
+                    ));
+                }
+
+            } catch (Exception e) {
+                System.out.println("ERROR processing cruise " + cruiseId + ": " + e.getMessage());
+                e.printStackTrace();
             }
         }
 
